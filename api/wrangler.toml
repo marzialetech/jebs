@@ -6,9 +6,12 @@ compatibility_date = "2024-01-01"
 # Allow both prod and localhost for dev
 CORS_ORIGIN = "*"
 
+# Demo mode: applications are accepted but not emailed (for testing)
+DEMO_MODE = "true"
+
 # Stripe secret key - set via: wrangler secret put STRIPE_SECRET_KEY
 # Use sk_test_... for test mode, sk_live_... for production
 
-# Employment applications - set via wrangler secret put:
+# Employment applications (when DEMO_MODE is false) - set via wrangler secret put:
 # RESEND_API_KEY - from resend.com for sending application emails
 # JEB_APPLICATION_EMAIL - email address to receive applications (e.g. jebs@jebsrestaurant.com)

@@ -35,12 +35,12 @@ The Order page includes a full menu with add-to-cart and Stripe Checkout. To ena
 
 ## Employment applications
 
-The Apply page offers a PDF download or online form submission. To receive applications via email:
+The Apply page offers a PDF download or online form submission.
 
-1. Create an account at [resend.com](https://resend.com) and get an API key.
-2. Set secrets:
-   ```bash
-   npx wrangler secret put RESEND_API_KEY
-   npx wrangler secret put JEB_APPLICATION_EMAIL   # e.g. jebs@jebsrestaurant.com
-   ```
-3. Redeploy the API. Without these secrets, submissions are logged but not emailed.
+**Demo mode (default):** Set `DEMO_MODE = "true"` in `api/wrangler.toml`. Applications are accepted and logged but not emailed. Use this for testing.
+
+**Live mode:** To receive applications via email:
+1. Set `DEMO_MODE = "false"` in wrangler.toml
+2. Create an account at [resend.com](https://resend.com) and get an API key
+3. Run: `npx wrangler secret put RESEND_API_KEY` and `npx wrangler secret put JEB_APPLICATION_EMAIL`
+4. Redeploy

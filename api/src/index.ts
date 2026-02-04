@@ -2,6 +2,7 @@ import Stripe from 'stripe';
 
 export interface Env {
   STRIPE_SECRET_KEY: string;
+  DEMO_MODE?: string;
   RESEND_API_KEY?: string;
   JEB_APPLICATION_EMAIL?: string;
   CORS_ORIGIN?: string;
@@ -101,6 +102,7 @@ export default {
     if (method === 'POST' && path === '/api/submit-application') {
       try {
         const body = (await request.json()) as EmploymentApplication;
+        const isDemo = env.DEMO_MODE === 'true';
         const toEmail = env.JEB_APPLICATION_EMAIL || 'jebs@marziale.tech';
         const apiKey = env.RESEND_API_KEY;
 
@@ -109,7 +111,7 @@ export default {
           .map(([k, v]) => `${k}: ${v}`)
           .join('\n');
 
-        if (apiKey) {
+        if (!isDemo && apiKey) {
           const res = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -127,11 +129,13 @@ export default {
             const err = await res.text();
             throw new Error(err || 'Email send failed');
           }
+        } else if (isDemo) {
+          console.log('[DEMO] Application received:', bodyText);
         } else {
           console.log('Application received (no RESEND_API_KEY):', bodyText);
         }
 
-        return jsonResponse({ success: true }, env);
+        return jsonResponse({ success: true, demo: isDemo }, env);
       } catch (err) {
         console.error('Application submit error:', err);
         const msg = err instanceof Error ? err.message : 'Submission failed';
