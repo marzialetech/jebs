@@ -329,7 +329,11 @@
         .order-cart { flex: 0 0 320px; min-width: 0; display: flex; flex-direction: column; }
         .order-cart-inner { background: #e8e0d5; border: 1px solid #b87a65; border-radius: 8px; padding: 16px; flex: 1; min-height: 0; overflow: auto; }
         .order-cart h4 { margin: 0 0 12px 0; color: #9e4538; font-size: 1.3em; font-style: italic; }
+        .order-toc { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 20px; padding: 12px 16px; background: #e8e0d5; border: 1px solid #b87a65; border-radius: 8px; }
+        .order-toc a { color: #9e4538; text-decoration: none; font-size: 14px; font-weight: 600; }
+        .order-toc a:hover { text-decoration: underline; }
         .order-cat { margin-bottom: 20px; }
+        .order-cat[id] { scroll-margin-top: 8px; }
         .order-cat h5 { margin: 0 0 8px 0; color: #9e4538; font-size: 1.1em; font-style: italic; }
         .order-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #d8c8b8; }
         .order-item:last-child { border-bottom: none; }
@@ -906,8 +910,13 @@
         function renderMenu() {
             var container = document.getElementById('orderMenu');
             if (!container || !menuData) return;
-            container.innerHTML = menuData.categories.map(function(cat) {
-                return '<div class="order-cat">' +
+            var catsWithItems = menuData.categories.filter(function(c) { return c.items && c.items.length > 0; });
+            var tocHtml = '<div class="order-toc"><strong>Jump to:</strong> ' +
+                catsWithItems.map(function(cat) {
+                    return '<a href="#" class="order-toc-link" data-cat="' + escapeHtml(cat.id) + '">' + escapeHtml(cat.name) + '</a>';
+                }).join(' · ') + '</div>';
+            container.innerHTML = tocHtml + menuData.categories.map(function(cat) {
+                return '<div class="order-cat" id="order-cat-' + escapeHtml(cat.id) + '">' +
                     '<h5>' + escapeHtml(cat.name) + '</h5>' +
                     cat.items.map(function(item) {
                         return '<div class="order-item">' +
@@ -925,6 +934,13 @@
                         name: b.getAttribute('data-name'),
                         price: parseFloat(b.getAttribute('data-price'))
                     });
+                });
+            });
+            container.querySelectorAll('.order-toc-link').forEach(function(a) {
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var el = container.querySelector('#order-cat-' + a.getAttribute('data-cat'));
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
         }
