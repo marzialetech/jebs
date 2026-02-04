@@ -178,6 +178,9 @@
         .about-left { flex: 1; min-width: 0; }
         .about-right { flex: 2; min-width: 0; display: flex; gap: 24px; flex-wrap: wrap; }
         .about-right .about-block { flex: 1 1 180px; }
+        .about-photo { flex: 0 0 auto; text-align: center; }
+        .about-photo img { max-width: 280px; width: 100%; height: auto; border-radius: 8px; border: 2px solid #b87a65; }
+        .about-photo figcaption { font-size: 0.85em; margin-top: 6px; color: #666; font-style: italic; }
         @media (max-width: 600px) {
             .about-split { flex-direction: column; }
         }
@@ -426,6 +429,12 @@
             </div>
             <div class="about-split">
                 <div class="about-left">
+                    <div class="about-block about-photo">
+                        <figure>
+                            <img src="assets/owners-photo.png" alt="Emerson and Jennifer Metzler, owners of Jeb's Restaurant">
+                            <figcaption>Emerson & Jennifer Metzler</figcaption>
+                        </figure>
+                    </div>
                     <div class="about-block">
                         <h4>About Us</h4>
                         <p>Family owned and operated by Emerson and Jennifer (Lehman) Metzler since November 4th, 2002. We cater to families, businesses, large parties, and casual diners. We welcome locals, snowmobilers, skiers, vacationers, and travelers passing through!</p>
