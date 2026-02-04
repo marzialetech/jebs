@@ -25,18 +25,18 @@
             overflow: hidden;
             overscroll-behavior: none;
             position: relative;
-            background-color: #d4c4b0;
+            background-color: #d8c8b8;
             background-image: url(assets/brick-texture.png);
             background-size: 300px auto;
             background-repeat: repeat;
-            color: #8b3a2e;
+            color: #9e4538;
         }
         .brick-band {
             position: fixed;
             left: 0;
             right: 0;
             z-index: 1;
-            background-color: #c9b8a8;
+            background-color: #c4b5a8;
             background-image: url(assets/brick-pattern.svg);
             background-repeat: repeat;
             background-size: 80px 48px;
@@ -83,8 +83,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #8b5a3c;
-            border: 1px solid #a67c52;
+            background: #a85c4a;
+            border: 1px solid #b87a65;
             border-top: none;
             padding: 0.5rem 1rem;
             cursor: pointer;
@@ -100,7 +100,7 @@
             border-right: none;
         }
         .icon-bar .desktop-icon:hover {
-            background: #a06945;
+            background: #b86a55;
         }
         .icon-bar .desktop-icon::before {
             content: '';
@@ -123,7 +123,7 @@
             bottom: 0;
             z-index: 10;
             overflow: hidden;
-            background: rgba(212, 196, 176, 0.92);
+            background: rgba(216, 200, 184, 0.92);
             color: #333;
         }
         .content-pane {
@@ -135,10 +135,10 @@
         }
         .content-pane.active { display: block; }
         .content-pane a {
-            color: #8b3a2e;
+            color: #9e4538;
             text-decoration: underline;
         }
-        .content-pane a:hover { color: #a84838; }
+        .content-pane a:hover { color: #b85a48; }
 
         .about-pane.active {
             display: flex;
@@ -154,7 +154,7 @@
         .about-block { flex: 1 1 280px; min-width: 0; }
         .about-block.wide { flex: 1 1 100%; }
         .about-footer { text-align: center; margin-top: auto; padding-top: 16px; }
-        .about-block h4 { margin: 0 0 8px 0; color: #8b3a2e; font-size: 2em; font-style: italic; }
+        .about-block h4 { margin: 0 0 8px 0; color: #9e4538; font-size: 2em; font-style: italic; }
         .about-block h4:not(.about-title) { font-size: 1.5em; }
         .about-hero { text-align: center; }
         .about-title { font-size: 2em !important; margin-bottom: 4px; }
@@ -166,13 +166,13 @@
         }
         .hours-table td {
             padding: 6px 12px;
-            border: 1px solid #a67c52;
+            border: 1px solid #b87a65;
         }
         .hours-table tr:nth-child(odd) {
-            background: #e5d5c4;
+            background: #e8d8c8;
         }
         .hours-table tr:nth-child(even) {
-            background: #dcc9b5;
+            background: #e0d0c0;
         }
         .about-split { display: flex; gap: 32px; flex: 1 1 100%; min-width: 0; }
         .about-left { flex: 1; min-width: 0; }
@@ -218,17 +218,17 @@
                 padding: 0.35rem 0.4rem;
                 font-size: 12px;
             }
-            .menu-nav-btn:last-child { border-right: 1px solid #a67c52 !important; }
-            .menu-nav-btn:nth-child(3n) { border-right: 1px solid #a67c52 !important; }
-            .menu-nav-btn:nth-child(n+10) { border-bottom: 1px solid #a67c52 !important; }
+            .menu-nav-btn:last-child { border-right: 1px solid #b87a65 !important; }
+            .menu-nav-btn:nth-child(3n) { border-right: 1px solid #b87a65 !important; }
+            .menu-nav-btn:nth-child(n+10) { border-bottom: 1px solid #b87a65 !important; }
         }
         .menu-nav-btn {
             flex: 1 1 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #8b5a3c;
-            border: 1px solid #a67c52;
+            background: #a85c4a;
+            border: 1px solid #b87a65;
             border-right: none;
             padding: 0.5rem 1rem;
             cursor: pointer;
@@ -239,7 +239,7 @@
             font-style: italic;
             color: #fff;
         }
-        .menu-nav-btn:last-child { border-right: 1px solid #a67c52; }
+        .menu-nav-btn:last-child { border-right: 1px solid #b87a65; }
         .menu-nav-btn:hover { background: #a06945; }
         .menu-nav-btn:nth-child(1) { flex: 1 1 8ch; }
         .menu-nav-btn:nth-child(2) { flex: 1 1 10ch; }
@@ -285,7 +285,7 @@
             .menu-pizza-halves { flex-direction: column; }
         }
         .menu-section { margin-bottom: 16px; }
-        .menu-section h4 { margin: 0 0 8px 0; color: #8b3a2e; font-size: 2em; font-style: italic; }
+        .menu-section h4 { margin: 0 0 8px 0; color: #9e4538; font-size: 2em; font-style: italic; }
         .menu-table {
             border-collapse: collapse;
             font-size: 16px;
@@ -293,14 +293,14 @@
         }
         .menu-table td {
             padding: 6px 12px;
-            border: 1px solid #a67c52;
+            border: 1px solid #b87a65;
             vertical-align: top;
         }
         .menu-table td:first-child { white-space: nowrap; }
         .menu-table td:last-child { text-align: right; white-space: nowrap; }
         .menu-table td[colspan="2"] { text-align: left; white-space: normal; font-size: 14px; }
-        .menu-table tr:nth-child(odd) { background: #e5d5c4; }
-        .menu-table tr:nth-child(even) { background: #dcc9b5; }
+        .menu-table tr:nth-child(odd) { background: #e8d8c8; }
+        .menu-table tr:nth-child(even) { background: #e0d0c0; }
         .menu-footer { text-align: center; flex-shrink: 0; padding-top: 8px; font-size: 15px; margin: 0; }
         .menu-note { margin: 0 0 6px 0; font-size: 15px; }
         @media (max-width: 700px) {
@@ -321,27 +321,27 @@
         .order-layout { display: flex; gap: 24px; flex: 1; min-height: 0; min-width: 0; }
         .order-menu { flex: 1; min-width: 0; overflow: auto; }
         .order-cart { flex: 0 0 320px; min-width: 0; display: flex; flex-direction: column; }
-        .order-cart-inner { background: #e8e0d5; border: 1px solid #a67c52; border-radius: 8px; padding: 16px; flex: 1; min-height: 0; overflow: auto; }
-        .order-cart h4 { margin: 0 0 12px 0; color: #8b3a2e; font-size: 1.3em; font-style: italic; }
+        .order-cart-inner { background: #e8e0d5; border: 1px solid #b87a65; border-radius: 8px; padding: 16px; flex: 1; min-height: 0; overflow: auto; }
+        .order-cart h4 { margin: 0 0 12px 0; color: #9e4538; font-size: 1.3em; font-style: italic; }
         .order-type { margin-bottom: 16px; }
         .order-type label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; margin-right: 16px; }
-        .order-type input { accent-color: #8b3a2e; }
+        .order-type input { accent-color: #9e4538; }
         .order-cat { margin-bottom: 20px; }
-        .order-cat h5 { margin: 0 0 8px 0; color: #8b3a2e; font-size: 1.1em; font-style: italic; }
-        .order-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #d4c4b0; }
+        .order-cat h5 { margin: 0 0 8px 0; color: #9e4538; font-size: 1.1em; font-style: italic; }
+        .order-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #d8c8b8; }
         .order-item:last-child { border-bottom: none; }
         .order-item-name { flex: 1; min-width: 0; }
         .order-item-price { color: #333; white-space: nowrap; }
-        .order-item-add { background: #8b3a2e; color: #fff; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 14px; }
-        .order-item-add:hover { background: #a84838; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #d4c4b0; font-size: 15px; }
+        .order-item-add { background: #9e4538; color: #fff; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 14px; }
+        .order-item-add:hover { background: #b85a48; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #d8c8b8; font-size: 15px; }
         .cart-item-qty { min-width: 2ch; }
-        .cart-item-rm { background: transparent; border: none; color: #8b3a2e; cursor: pointer; font-size: 18px; padding: 0 4px; line-height: 1; }
+        .cart-item-rm { background: transparent; border: none; color: #9e4538; cursor: pointer; font-size: 18px; padding: 0 4px; line-height: 1; }
         .cart-item-rm:hover { text-decoration: underline; }
-        .cart-total { margin-top: 12px; padding-top: 12px; border-top: 2px solid #a67c52; font-weight: 700; font-size: 1.1em; }
+        .cart-total { margin-top: 12px; padding-top: 12px; border-top: 2px solid #b87a65; font-weight: 700; font-size: 1.1em; }
         .order-checkout { margin-top: 16px; }
-        .order-checkout-btn { background: #8b3a2e; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 18px; font-weight: 700; width: 100%; }
-        .order-checkout-btn:hover { background: #a84838; }
+        .order-checkout-btn { background: #9e4538; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 18px; font-weight: 700; width: 100%; }
+        .order-checkout-btn:hover { background: #b85a48; }
         .order-checkout-btn:disabled { background: #999; cursor: not-allowed; }
         .order-phone { margin-top: 16px; font-size: 15px; color: #666; }
         .order-cart-bottom { display: none; }
@@ -898,7 +898,7 @@
                 }
                 var total = getTotal();
                 totalHtml = (isDelivery && sub < DELIVERY_MIN)
-                    ? '<span style="color:#8b3a2e;">$25 minimum for delivery. Current: $' + sub.toFixed(2) + '</span>'
+                    ? '<span style="color:#9e4538;">$25 minimum for delivery. Current: $' + sub.toFixed(2) + '</span>'
                     : (isDelivery ? 'Subtotal: $' + sub.toFixed(2) + '<br>Delivery: $' + DELIVERY_FEE.toFixed(2) + '<br>Total: $' + total.toFixed(2) : 'Total: $' + total.toFixed(2));
             }
             itemsEls.forEach(function(el) { el.innerHTML = cartHtml; });
@@ -992,7 +992,7 @@
                 renderCart();
                 history.replaceState(null, '', window.location.pathname + window.location.hash);
                 var msg = document.createElement('p');
-                msg.style.cssText = 'background:#8b3a2e;color:#fff;padding:12px;border-radius:8px;margin-bottom:16px;';
+                msg.style.cssText = 'background:#9e4538;color:#fff;padding:12px;border-radius:8px;margin-bottom:16px;';
                 msg.textContent = 'Thank you! Your order has been received. We will prepare it for pickup/delivery.';
                 var orderPane = document.getElementById('orderPane');
                 if (orderPane && !orderPane.querySelector('.order-success-msg')) {
