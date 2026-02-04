@@ -354,10 +354,12 @@
         .order-checkout-btn:hover { background: #3d6c3e; }
         .order-checkout-btn:disabled { background: #999; cursor: not-allowed; }
         .order-phone { margin-top: 16px; font-size: 15px; color: #666; }
+        .order-cart-bottom { display: none; }
         @media (max-width: 768px) {
             .order-layout { flex-direction: column; }
             .order-menu { order: 2; }
             .order-cart { order: 1; flex: 0 0 auto; }
+            .order-cart-bottom { display: block; order: 3; }
         }
 
         /* Mobile: vertical scroll only, no horizontal scroll */
@@ -696,10 +698,21 @@
                 <div class="order-cart">
                     <div class="order-cart-inner">
                         <h4>Your Order</h4>
-                        <div id="orderCartItems"></div>
-                        <div class="cart-total" id="orderCartTotal">$0.00</div>
+                        <div class="order-cart-items"></div>
+                        <div class="cart-total order-cart-total">$0.00</div>
                         <div class="order-checkout">
-                            <button class="order-checkout-btn" id="orderCheckoutBtn" disabled>Checkout with Stripe</button>
+                            <button type="button" class="order-checkout-btn" disabled>Checkout with Stripe</button>
+                        </div>
+                        <p class="order-phone">Or call <a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
+                    </div>
+                </div>
+                <div class="order-cart order-cart-bottom">
+                    <div class="order-cart-inner">
+                        <h4>Your Order</h4>
+                        <div class="order-cart-items"></div>
+                        <div class="cart-total order-cart-total">$0.00</div>
+                        <div class="order-checkout">
+                            <button type="button" class="order-checkout-btn" disabled>Checkout with Stripe</button>
                         </div>
                         <p class="order-phone">Or call <a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
                     </div>
@@ -843,19 +856,19 @@
         }
 
         function renderCart() {
-            var el = document.getElementById('orderCartItems');
-            var totalEl = document.getElementById('orderCartTotal');
-            var btn = document.getElementById('orderCheckoutBtn');
-            if (!el || !totalEl || !btn) return;
+            var itemsEls = document.querySelectorAll('.order-cart-items');
+            var totalEls = document.querySelectorAll('.order-cart-total');
+            var btns = document.querySelectorAll('.order-checkout-btn');
+            if (!itemsEls.length || !totalEls.length) return;
             var sub = getSubtotal();
             var isDelivery = getOrderType() === 'delivery';
+            var cartHtml, totalHtml;
             if (cart.length === 0) {
-                el.innerHTML = '<p style="color:#666;margin:0;">Cart is empty. Add items from the menu.</p>';
-                totalEl.textContent = '$0.00';
-                btn.disabled = true;
+                cartHtml = '<p style="color:#666;margin:0;">Cart is empty. Add items from the menu.</p>';
+                totalHtml = '$0.00';
             } else {
                 var minOk = !isDelivery || sub >= DELIVERY_MIN;
-                var cartHtml = cart.map(function(c) {
+                cartHtml = cart.map(function(c) {
                     return '<div class="cart-item" data-id="' + c.id + '">' +
                         '<span><span class="cart-item-qty">' + c.qty + '</span> × ' + escapeHtml(c.name) + '</span>' +
                         '<span>$' + (c.price * c.qty).toFixed(2) + ' <button type="button" class="cart-item-rm" aria-label="Remove">×</button></span>' +
@@ -864,17 +877,18 @@
                 if (isDelivery && minOk) {
                     cartHtml += '<div class="cart-item cart-item-delivery"><span>Delivery fee</span><span>$' + DELIVERY_FEE.toFixed(2) + '</span></div>';
                 }
-                el.innerHTML = cartHtml;
                 var total = getTotal();
-                totalEl.innerHTML = (isDelivery && sub < DELIVERY_MIN)
+                totalHtml = (isDelivery && sub < DELIVERY_MIN)
                     ? '<span style="color:#c41e3a;">$25 minimum for delivery. Current: $' + sub.toFixed(2) + '</span>'
                     : (isDelivery ? 'Subtotal: $' + sub.toFixed(2) + '<br>Delivery: $' + DELIVERY_FEE.toFixed(2) + '<br>Total: $' + total.toFixed(2) : 'Total: $' + total.toFixed(2));
-                btn.disabled = !minOk;
             }
-            el.querySelectorAll('.cart-item-rm').forEach(function(b) {
+            itemsEls.forEach(function(el) { el.innerHTML = cartHtml; });
+            totalEls.forEach(function(el) { el.innerHTML = totalHtml; });
+            btns.forEach(function(btn) { btn.disabled = cart.length === 0 || (isDelivery && sub < DELIVERY_MIN); });
+            document.querySelectorAll('.order-cart-items .cart-item-rm').forEach(function(b) {
                 b.addEventListener('click', function() {
                     var row = b.closest('.cart-item');
-                    if (row) removeFromCart(row.getAttribute('data-id'));
+                    if (row && !row.classList.contains('cart-item-delivery')) removeFromCart(row.getAttribute('data-id'));
                 });
             });
         }
@@ -922,8 +936,7 @@
             if (isDelivery) {
                 lineItems.push({ id: 'delivery', name: 'Delivery fee', priceCents: DELIVERY_FEE * 100, quantity: 1 });
             }
-            var btn = document.getElementById('orderCheckoutBtn');
-            if (btn) btn.disabled = true;
+            document.querySelectorAll('.order-checkout-btn').forEach(function(btn) { btn.disabled = true; });
             var origin = window.location.origin || (window.location.protocol + '//' + window.location.host);
             fetch(API_BASE + '/api/create-checkout-session', {
                 method: 'POST',
@@ -942,14 +955,16 @@
             }).catch(function(err) {
                 console.error(err);
                 alert('Checkout failed. Please call to order: 315-376-4420');
-                if (btn) btn.disabled = false;
+                document.querySelectorAll('.order-checkout-btn').forEach(function(btn) { btn.disabled = false; });
             });
         }
 
         document.querySelectorAll('input[name="orderType"]').forEach(function(r) {
             r.addEventListener('change', renderCart);
         });
-        document.getElementById('orderCheckoutBtn')?.addEventListener('click', doCheckout);
+        document.querySelectorAll('.order-checkout-btn').forEach(function(btn) {
+            btn.addEventListener('click', doCheckout);
+        });
 
         function checkSuccessParam() {
             var params = new URLSearchParams(window.location.search);
