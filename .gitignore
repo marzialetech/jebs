@@ -2,3 +2,10 @@ node_modules/
 scripts/node_modules/
 .DS_Store
 *.log
+
+# Dev-only (not part of product)
+jebs-website-overview.html
+assets/jebs-about.png
+assets/jebs-menu.png
+assets/jebs-order.png
+assets/jebs-apply.png
