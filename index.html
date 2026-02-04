@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New York Pizzeria</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        html, body {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+        }
+        html {
+            overflow: hidden;
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            height: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            overscroll-behavior: none;
+            position: relative;
+            background-color: #e8e0d5;
+            color: #c41e3a;
+        }
+        .stripe-band {
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            background: linear-gradient(
+                90deg,
+                #2d5c2e 0%, #2d5c2e 6.666%,
+                #f8f4ed 6.666%, #f8f4ed 13.333%,
+                #2d5c2e 13.333%, #2d5c2e 20%,
+                #f8f4ed 20%, #f8f4ed 26.666%,
+                #2d5c2e 26.666%, #2d5c2e 33.333%,
+                #f8f4ed 33.333%, #f8f4ed 40%,
+                #2d5c2e 40%, #2d5c2e 46.666%,
+                #f8f4ed 46.666%, #f8f4ed 53.333%,
+                #2d5c2e 53.333%, #2d5c2e 60%,
+                #f8f4ed 60%, #f8f4ed 66.666%,
+                #2d5c2e 66.666%, #2d5c2e 73.333%,
+                #f8f4ed 73.333%, #f8f4ed 80%,
+                #2d5c2e 80%, #2d5c2e 86.666%,
+                #f8f4ed 86.666%, #f8f4ed 93.333%,
+                #2d5c2e 93.333%, #2d5c2e 100%
+            );
+            background-size: 100% 100%;
+            background-position: center;
+        }
+        .header {
+            position: fixed;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 25vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            overflow: hidden;
+        }
+        .header .logo-frame {
+            background: #f8f4ed;
+            padding: 0.75rem;
+            display: inline-block;
+            max-height: 100%;
+        }
+        .header .logo-frame img {
+            display: block;
+            width: 80vw;
+            max-width: 80vw;
+            max-height: calc(25vh - 1.5rem);
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Button bar - wide thin buttons directly under stripes */
+        .icon-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            z-index: 100;
+        }
+        .icon-bar .desktop-icon {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #8B7355;
+            border: 1px solid #c4a574;
+            border-top: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            user-select: none;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            font-weight: 700;
+            font-style: italic;
+            color: #fff;
+            min-height: 0;
+        }
+        .icon-bar .desktop-icon:not(:last-child) {
+            border-right: none;
+        }
+        .icon-bar .desktop-icon:hover {
+            background: #a08060;
+        }
+        .icon-bar .desktop-icon::before {
+            content: '';
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background: transparent;
+        }
+        .icon-bar .desktop-icon.active::before {
+            background: #84cc16;
+        }
+
+        /* Main content - fills space below buttons, no scroll */
+        .main-content {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            overflow: hidden;
+            background: #e8e0d5;
+            color: #333;
+        }
+        .content-pane {
+            display: none;
+            padding: 24px 32px;
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .content-pane.active { display: block; }
+        .content-pane a {
+            color: #c41e3a;
+            text-decoration: underline;
+        }
+        .content-pane a:hover { color: #e84a5f; }
+
+        .about-pane.active {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 24px 32px;
+        }
+        .about-pane {
+            font-size: 17px;
+            line-height: 1.45;
+        }
+        .about-pane > * { margin: 0; }
+        .about-block { flex: 1 1 280px; min-width: 0; }
+        .about-block.wide { flex: 1 1 100%; }
+        .about-footer { text-align: center; margin-top: auto; padding-top: 16px; }
+        .about-block h4 { margin: 0 0 8px 0; color: #c41e3a; font-size: 1em; }
+        .about-hero { text-align: center; }
+        .about-title { font-size: 2em !important; margin-bottom: 4px; }
+        .about-subtitle { font-size: 1em; opacity: 0.9; margin: 0; }
+        .hours-table {
+            margin: 4px 0 12px 0;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+        .hours-table td {
+            padding: 6px 12px;
+            border: 1px solid #c4a574;
+        }
+        .hours-table tr:nth-child(odd) {
+            background: #ebe0d5;
+        }
+        .hours-table tr:nth-child(even) {
+            background: #e8dfd0;
+        }
+        .about-split { display: flex; gap: 32px; flex: 1 1 100%; min-width: 0; }
+        .about-left { flex: 1; min-width: 0; }
+        .about-right { flex: 2; min-width: 0; display: flex; gap: 24px; flex-wrap: wrap; }
+        .about-right .about-block { flex: 1 1 180px; }
+        @media (max-width: 600px) {
+            .about-split { flex-direction: column; }
+        }
+
+        .menu-pane.active {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .menu-pane {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .menu-pane { padding-top: 0; }
+        .menu-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-shrink: 0;
+            margin: 0 -32px 0 -32px;
+        }
+        .menu-nav-btn {
+            flex: 1 1 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #7a6349;
+            border: 1px solid #c4a574;
+            border-right: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            user-select: none;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 18px;
+            font-weight: 700;
+            font-style: italic;
+            color: #fff;
+        }
+        .menu-nav-btn:last-child { border-right: 1px solid #c4a574; }
+        .menu-nav-btn:hover { background: #8f7358; }
+        .menu-nav-btn:nth-child(1) { flex: 1 1 5ch; }
+        .menu-nav-btn:nth-child(2) { flex: 1 1 10ch; }
+        .menu-nav-btn:nth-child(3) { flex: 1 1 6ch; }
+        .menu-nav-btn:nth-child(4) { flex: 1 1 5ch; }
+        .menu-nav-btn:nth-child(5) { flex: 1 1 4ch; }
+        .menu-nav-btn:nth-child(6) { flex: 1 1 7ch; }
+        .menu-nav-btn:nth-child(7) { flex: 1 1 14ch; }
+        .menu-nav-btn:nth-child(8) { flex: 1 1 7ch; }
+        .menu-nav-btn:nth-child(9) { flex: 1 1 8ch; }
+        .menu-nav-btn::before {
+            content: '';
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background: transparent;
+        }
+        .menu-nav-btn.active::before { background: #84cc16; }
+        .menu-sub {
+            display: none;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .menu-sub.active { display: block; }
+        .menu-sub-content { overflow: auto; min-height: 0; flex: 1; }
+        .menu-split { display: flex; gap: 32px; flex: 1; min-height: 0; min-width: 0; }
+        .menu-left { flex: 1; min-width: 0; }
+        .menu-right { flex: 2; min-width: 0; }
+        .menu-pizza-halves {
+            display: flex;
+            gap: 24px;
+            height: 100%;
+            min-height: 0;
+        }
+        .menu-pizza-halves > div { flex: 1; min-width: 0; }
+        @media (max-width: 600px) {
+            .menu-pizza-halves { flex-direction: column; }
+        }
+        .menu-section { margin-bottom: 16px; }
+        .menu-section h4 { margin: 0 0 8px 0; color: #c41e3a; font-size: 1em; }
+        .menu-table {
+            border-collapse: collapse;
+            font-size: 13px;
+            width: 100%;
+        }
+        .menu-table td {
+            padding: 4px 10px;
+            border: 1px solid #c4a574;
+            vertical-align: top;
+        }
+        .menu-table td:first-child { white-space: nowrap; }
+        .menu-table td:last-child { text-align: right; white-space: nowrap; }
+        .menu-table td[colspan="2"] { text-align: left; white-space: normal; font-size: 11px; }
+        .menu-table tr:nth-child(odd) { background: #ebe0d5; }
+        .menu-table tr:nth-child(even) { background: #e8dfd0; }
+        .menu-footer { text-align: center; flex-shrink: 0; padding-top: 8px; font-size: 12px; margin: 0; }
+        .menu-note { margin: 0 0 6px 0; font-size: 12px; }
+        @media (max-width: 700px) {
+            .menu-split { flex-direction: column; }
+        }
+
+        .order-pane.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .order-pane {
+            font-size: 22px;
+            line-height: 1.8;
+        }
+        .order-pane p { margin: 0 0 16px 0; }
+
+    </style>
+</head>
+<body>
+    <div class="stripe-band" id="stripeBand"></div>
+    <div class="header">
+        <div class="logo-frame">
+            <img src="assets/logo-text-red.svg" alt="New York Pizzeria">
+        </div>
+    </div>
+
+    <div class="icon-bar">
+        <button class="desktop-icon" id="aboutBtn" type="button">About</button>
+        <button class="desktop-icon" id="menuBtn" type="button">Menu</button>
+        <button class="desktop-icon" id="orderBtn" type="button">Order</button>
+    </div>
+
+    <main class="main-content" id="mainContent">
+        <div class="content-pane about-pane" id="aboutPane">
+            <div class="about-block wide about-hero">
+                <h4 class="about-title">New York Pizzeria & Restaurant of Lowville</h4>
+                <p class="about-subtitle">The Carbonaro family & staff welcome you!</p>
+            </div>
+            <div class="about-split">
+                <div class="about-left">
+                    <div class="about-block">
+                        <h4>Take-outs & Delivery</h4>
+                        <p>In Town Deliveries Only — 11am–2pm & 5pm–8pm<br>$5 Delivery Charge · $25 minimum</p>
+                    </div>
+                    <div class="about-block">
+                        <h4>We Do Catering!</h4>
+                        <p>Special event? Let us help! Holiday parties, business functions, family gatherings, school events.</p>
+                    </div>
+                </div>
+                <div class="about-right">
+                    <div class="about-block">
+                        <h4>Winter Hours</h4>
+                        <table class="hours-table">
+                            <tr><td>Tuesday–Thursday</td><td>10am–9pm</td></tr>
+                            <tr><td>Friday & Saturday</td><td>11am–10pm</td></tr>
+                            <tr><td>Sunday</td><td>12pm–8pm</td></tr>
+                            <tr><td>Monday</td><td>Closed</td></tr>
+                        </table>
+                    </div>
+                    <div class="about-block">
+                        <h4>Summer Hours</h4>
+                        <table class="hours-table">
+                            <tr><td>Tuesday–Thursday</td><td>11am–2pm & 4pm–9pm</td></tr>
+                            <tr><td>Friday & Saturday</td><td>11am–10pm</td></tr>
+                            <tr><td>Sunday</td><td>12pm–9pm</td></tr>
+                            <tr><td>Monday</td><td>Closed</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="about-block wide about-footer">
+                <p>7580 South State St. · Lowville, NY · <a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
+                <p><em>Prices subject to change without notice.</em></p>
+            </div>
+        </div>
+
+        <div class="content-pane menu-pane" id="menuPane">
+            <div class="menu-nav">
+                <button class="menu-nav-btn" data-cat="pizza">Pizza</button>
+                <button class="menu-nav-btn" data-cat="appetizers">Appetizers</button>
+                <button class="menu-nav-btn" data-cat="salads">Salads</button>
+                <button class="menu-nav-btn" data-cat="wings">Wings</button>
+                <button class="menu-nav-btn" data-cat="subs">Subs</button>
+                <button class="menu-nav-btn" data-cat="tunnels">Tunnels</button>
+                <button class="menu-nav-btn" data-cat="pockets">Pockets & Rolls</button>
+                <button class="menu-nav-btn" data-cat="dinners">Dinners</button>
+                <button class="menu-nav-btn" data-cat="desserts">Desserts</button>
+            </div>
+            <div class="menu-sub" id="menu-sub-appetizers">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Appetizers</h4>
+                        <table class="menu-table">
+                            <tr><td>French Fries</td><td>5.50</td></tr>
+                            <tr><td>Pizza Logs (5)</td><td>9.95</td></tr>
+                            <tr><td>Bread Sticks (6)</td><td>8.50</td></tr>
+                            <tr><td>Bread Sticks (12)</td><td>16.50</td></tr>
+                            <tr><td>Garlic Bread w/ cheese</td><td>6.25</td></tr>
+                            <tr><td>Bruschetta Bread</td><td>7.25</td></tr>
+                            <tr><td>Chicken Fingers (6)</td><td>10.75</td></tr>
+                            <tr><td>Chicken Fingers (12)</td><td>21.75</td></tr>
+                            <tr><td>Mozzarella Sticks (6)</td><td>9.25</td></tr>
+                            <tr><td>Mozzarella Sticks (12)</td><td>17.00</td></tr>
+                            <tr><td>Breaded Mushrooms</td><td>9.75</td></tr>
+                            <tr><td>Breaded Cauliflower</td><td>9.75</td></tr>
+                            <tr><td>Garlic Knots (8)</td><td>9.00</td></tr>
+                            <tr><td>Fried Calamari</td><td>16.95</td></tr>
+                            <tr><td>Mussels</td><td>19.95</td></tr>
+                            <tr><td>Onion Rings</td><td>8.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-salads">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Salads</h4>
+                        <table class="menu-table">
+                            <tr><td>Tossed Salad SM</td><td>5.95</td></tr>
+                            <tr><td>Tossed Salad LG</td><td>8.50</td></tr>
+                            <tr><td>Antipasto Salad</td><td>12.95</td></tr>
+                            <tr><td>Chef's Salad</td><td>13.50</td></tr>
+                            <tr><td>Crispy Chicken Salad</td><td>16.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-wings">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Chicken Wings</h4>
+                        <table class="menu-table">
+                            <tr><td>Split wings</td><td>+2.00</td></tr>
+                            <tr><td>Blue cheese</td><td>2.00 each</td></tr>
+                            <tr><td>Extra wing sauce</td><td>3.00</td></tr>
+                            <tr><td colspan="2">Call for pricing. Mild, hot, extra hot, garlic, sweet, honey mustard, barbecue. Honey mustard/bbq +1.00 · Mixed +2.00</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-subs">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Lunch Subs</h4>
+                        <p class="menu-note">12" bread, one size</p>
+                        <table class="menu-table">
+                            <tr><td>Salami</td><td>12.00</td></tr>
+                            <tr><td>Mixed</td><td>12.00</td></tr>
+                            <tr><td>Ham</td><td>12.00</td></tr>
+                            <tr><td>Turkey</td><td>12.00</td></tr>
+                            <tr><td>Roast Beef</td><td>12.00</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub active" id="menu-sub-pizza">
+                <div class="menu-sub-content menu-pizza-halves">
+                    <div>
+                        <div class="menu-section">
+                            <h4>Pizza</h4>
+                            <p class="menu-note">Homemade dough & sauce daily</p>
+                            <table class="menu-table">
+                            <tr><td>Cheese SM</td><td>18.95</td></tr>
+                            <tr><td>Cheese LG</td><td>20.95</td></tr>
+                            <tr><td>Cheese XLG</td><td>24.95</td></tr>
+                            <tr><td>Toppings SM/LG</td><td>3.00</td></tr>
+                            <tr><td>Toppings XLG</td><td>4.00</td></tr>
+                            <tr><td>Special toppings SM</td><td>3.00</td></tr>
+                            <tr><td>Special toppings LG</td><td>4.00</td></tr>
+                            <tr><td>Special toppings XLG</td><td>5.00</td></tr>
+                            <tr><td colspan="2">Standard: Sausage, Meatballs, Pepperoni, Ham, Peppers, Onions, Mushrooms, Olives</td></tr>
+                            <tr><td colspan="2">Special: Bacon, Broccoli, Spinach, Pineapple, Chicken, Tomato, Anchovies</td></tr>
+                        </table>
+                        </div>
+                    </div>
+                    <div>
+                    <div class="menu-section">
+                        <h4>Special Pizza</h4>
+                        <table class="menu-table">
+                            <tr><td>Garlic SM/LG/XLG</td><td>16.95/20.95/20.25</td></tr>
+                            <tr><td>Chicken Bacon Ranch SM/LG/XLG</td><td>25.95/29.95/31.95</td></tr>
+                            <tr><td>Chicken Parm SM/LG/XLG</td><td>20.95/24.50/27.00</td></tr>
+                            <tr><td>Broccoli SM/LG/XLG</td><td>21.95/24.95/25.50</td></tr>
+                            <tr><td>Chicken SM/LG/XLG</td><td>21.95/23.50/25.50</td></tr>
+                            <tr><td>Chicken Vodka LG</td><td>27.95</td></tr>
+                            <tr><td>Bacon SM/LG/XLG</td><td>20.95/23.95/25.95</td></tr>
+                            <tr><td>Veggie SM/LG/XLG</td><td>25.95/28.95/31.95</td></tr>
+                            <tr><td>Tomato SM/LG/XLG</td><td>21.50/24.95/26.50</td></tr>
+                            <tr><td>Chicken & Broccoli SM/LG</td><td>22.50/25.95</td></tr>
+                            <tr><td>Chicken & Tomato SM/LG</td><td>21.95/25.95</td></tr>
+                            <tr><td>Chicken Wing SM/LG/XLG</td><td>19.95/26.95/29.95</td></tr>
+                            <tr><td>Meatlovers SM/LG/XLG</td><td>26.95/33.95/34.95</td></tr>
+                            <tr><td>Spinach SM/LG</td><td>21.95/23.95</td></tr>
+                            <tr><td>White Ricotta SM/LG/XLG</td><td>23.95/25.95/26.95</td></tr>
+                            <tr><td>Steak SM/LG/XLG</td><td>21.95/24.95/26.95</td></tr>
+                            <tr><td>Pesto SM/LG/XLG</td><td>21.95/24.95/26.95</td></tr>
+                            <tr><td>Calzone LG/XLG</td><td>29.50/31.50</td></tr>
+                            <tr><td>Stromboli LG/XLG</td><td>31.95/33.50</td></tr>
+                            <tr><td>Stuffed Pizza LG/XLG</td><td>31.95/33.50</td></tr>
+                            <tr><td>Baked Ziti SM/LG/XLG</td><td>18.50/21.50/23.50</td></tr>
+                            <tr><td>Gluten Free SM</td><td>13.75</td></tr>
+                            <tr><td>Sheet 24 slices</td><td>34.95</td></tr>
+                            <tr><td>Sicilian 12 slices</td><td>27.95</td></tr>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-tunnels">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Tunnels</h4>
+                        <p class="menu-note">12" bread. Extra toppings .75 · Fries 3.00</p>
+                        <table class="menu-table">
+                            <tr><td>Meatball w/ cheese & sauce</td><td>13.75</td></tr>
+                            <tr><td>Eggplant</td><td>12.75</td></tr>
+                            <tr><td>Chicken Parmesan</td><td>13.75</td></tr>
+                            <tr><td>Sausage and Peppers</td><td>13.75</td></tr>
+                            <tr><td>Sausage</td><td>13.75</td></tr>
+                            <tr><td>Steak Sandwich</td><td>14.75</td></tr>
+                            <tr><td>Pizza Sub</td><td>12.75</td></tr>
+                            <tr><td>Hot Roast Beef w/ Gravy</td><td>14.75</td></tr>
+                            <tr><td>Hot Turkey w/ Gravy</td><td>13.75</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-pockets">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Pockets & Rolls</h4>
+                        <p class="menu-note">For two. Pizza sauce included. Extra toppings 1.50</p>
+                        <table class="menu-table">
+                            <tr><td>Pepperoni Roll</td><td>14.95</td></tr>
+                            <tr><td>Stromboli Roll</td><td>15.95</td></tr>
+                            <tr><td>Cheese Calzone</td><td>12.95</td></tr>
+                            <tr><td>Broccoli Roll</td><td>14.95</td></tr>
+                            <tr><td>Ham Roll</td><td>14.95</td></tr>
+                            <tr><td>Sausage Roll</td><td>14.95</td></tr>
+                            <tr><td>Buffalo Chicken Calzone</td><td>15.95</td></tr>
+                            <tr><td>Steak Calzone</td><td>17.95</td></tr>
+                            <tr><td>Meat Lovers Calzone</td><td>19.95</td></tr>
+                            <tr><td>Italian Special Calzone</td><td>15.95</td></tr>
+                            <tr><td>Veggie Calzone</td><td>15.95</td></tr>
+                            <tr><td>Calzone Pocket</td><td>13.95</td></tr>
+                            <tr><td>Sicilian Calzone</td><td>16.95</td></tr>
+                            <tr><td>Eggplant Parm Calzone</td><td>16.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-dinners">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Dinners</h4>
+                        <p class="menu-note">Garlic bread & tossed salad. Split 2.00</p>
+                        <table class="menu-table">
+                            <tr><td>Chicken Riggies</td><td>21.50</td></tr>
+                            <tr><td>Meat Tortellini</td><td>20.95</td></tr>
+                            <tr><td>Stuffed Shells</td><td>20.95</td></tr>
+                            <tr><td>Gnocchi</td><td>20.95</td></tr>
+                            <tr><td>Lasagna</td><td>21.95</td></tr>
+                            <tr><td>Baked Ziti</td><td>20.95</td></tr>
+                            <tr><td>Cheese Ravioli</td><td>21.95</td></tr>
+                            <tr><td>Spaghetti</td><td>14.95</td></tr>
+                            <tr><td>+ meatballs or sausage</td><td>3.00</td></tr>
+                            <tr><td>Chicken Parmesan</td><td>21.50</td></tr>
+                            <tr><td>Penne Arrabbiata</td><td>19.95</td></tr>
+                            <tr><td>Side meatballs/sausage</td><td>7.75</td></tr>
+                            <tr><td>Linguini clam sauce</td><td>21.95</td></tr>
+                            <tr><td>Linguini Alfredo</td><td>21.50</td></tr>
+                            <tr><td>Linguini Alfredo w/ chicken & broccoli</td><td>22.50</td></tr>
+                            <tr><td>Linguini Alfredo w/ chicken</td><td>21.95</td></tr>
+                            <tr><td>Penne Amatriciana</td><td>21.50</td></tr>
+                            <tr><td>Eggplant Parm</td><td>20.95</td></tr>
+                            <tr><td>Spaghetti Pesto</td><td>19.95</td></tr>
+                            <tr><td>Spaghetti Garlic & Oil</td><td>13.50</td></tr>
+                            <tr><td>Cavatelli w/ broccoli</td><td>21.50</td></tr>
+                            <tr><td>Manicotti</td><td>20.95</td></tr>
+                            <tr><td>Fried Haddock</td><td>17.96</td></tr>
+                            <tr><td>Chicken and Vodka</td><td>21.95</td></tr>
+                            <tr><td>Rigatoni with Vodka</td><td>19.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-desserts">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Italian Desserts</h4>
+                        <table class="menu-table">
+                            <tr><td>Cannoli</td><td>5.95</td></tr>
+                            <tr><td>Tiramisu</td><td>7.95</td></tr>
+                            <tr><td>Fried Dough</td><td>5.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-footer">
+                <p><em>If you have a food allergy, please notify us. Menu prices and items subject to change without notice.</em></p>
+            </div>
+        </div>
+
+        <div class="content-pane order-pane" id="orderPane">
+            <p>Call to order for pickup or delivery.</p>
+            <p>7580 South State St. · Lowville, NY</p>
+            <p><a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
+            <p><em>In-town delivery: $5 charge, $25 minimum. 11am–2pm & 5pm–8pm.</em></p>
+        </div>
+    </main>
+
+    <script>
+(function() {
+    const aboutBtn = document.getElementById('aboutBtn');
+    const menuBtn = document.getElementById('menuBtn');
+    const orderBtn = document.getElementById('orderBtn');
+
+
+    const aboutPane = document.getElementById('aboutPane');
+    const menuPane = document.getElementById('menuPane');
+    const orderPane = document.getElementById('orderPane');
+    const mainContent = document.getElementById('mainContent');
+    const allPanes = [aboutPane, menuPane, orderPane];
+
+    const DEFAULT_PANE = 'about';
+    const DEFAULT_MENU_CAT = 'pizza';
+    const MENU_CATS = ['pizza','appetizers','salads','wings','subs','tunnels','pockets','dinners','desserts'];
+    const hashFor = { about: 'about', menu: 'menu', order: 'order' };
+    const paneForHash = { about: aboutPane, menu: menuPane, order: orderPane };
+    const btnForHash = { about: aboutBtn, menu: menuBtn, order: orderBtn };
+
+    function updateLayout() {
+        const stripeBand = document.getElementById('stripeBand');
+        const logoFrame = document.querySelector('.header .logo-frame');
+        const iconBar = document.querySelector('.icon-bar');
+        if (!stripeBand || !logoFrame || !mainContent) return;
+        const rect = logoFrame.getBoundingClientRect();
+        const logoBottom = rect.bottom;
+        const logoHeight = rect.height;
+        const margin = logoHeight * 0.1;
+        const stripeTop = 0;
+        const stripeHeight = logoBottom + margin;
+        stripeBand.style.top = stripeTop + 'px';
+        stripeBand.style.height = stripeHeight + 'px';
+        if (iconBar) {
+            iconBar.style.top = (stripeTop + stripeHeight) + 'px';
+            const barRect = iconBar.getBoundingClientRect();
+            mainContent.style.top = barRect.bottom + 'px';
+            mainContent.style.height = (window.innerHeight - barRect.bottom) + 'px';
+        }
+    }
+
+    function setActiveButton(key) {
+        [aboutBtn, menuBtn, orderBtn].forEach(function(btn) { btn.classList.remove('active'); });
+        if (key && btnForHash[key]) btnForHash[key].classList.add('active');
+    }
+
+    function showMenuSub(cat, updateHash) {
+        var catKey = (cat && MENU_CATS.indexOf(cat) >= 0) ? cat : DEFAULT_MENU_CAT;
+        document.querySelectorAll('.menu-sub').forEach(function(s) { s.classList.remove('active'); });
+        document.querySelectorAll('.menu-nav-btn').forEach(function(b) { b.classList.remove('active'); });
+        var sub = document.getElementById('menu-sub-' + catKey);
+        var btn = document.querySelector('.menu-nav-btn[data-cat="' + catKey + '"]');
+        if (sub) sub.classList.add('active');
+        if (btn) btn.classList.add('active');
+        if (updateHash) window.location.hash = 'menu-' + catKey;
+    }
+
+    function showPane(key, updateHash) {
+        var mainKey = (key && key in paneForHash) ? key : DEFAULT_PANE;
+        var menuCat = null;
+        if (key && key.indexOf('menu-') === 0) {
+            mainKey = 'menu';
+            menuCat = key.replace('menu-', '');
+        }
+        allPanes.forEach(function(p) { p.classList.remove('active'); });
+        var pane = paneForHash[mainKey];
+        if (pane) pane.classList.add('active');
+        setActiveButton(mainKey);
+        if (mainKey === 'menu') showMenuSub(menuCat || DEFAULT_MENU_CAT, false);
+        if (updateHash) window.location.hash = (mainKey === 'menu' && menuCat) ? 'menu-' + menuCat : mainKey;
+    }
+
+    function syncFromHash() {
+        var hash = (window.location.hash || '').replace(/^#/, '');
+        var paneKey = hash;
+        if (!hash) paneKey = DEFAULT_PANE;
+        else if (hash === 'menu') paneKey = 'menu-' + DEFAULT_MENU_CAT;
+        else if (hash.indexOf('menu-') !== 0 && !(hash in paneForHash)) paneKey = DEFAULT_PANE;
+        if (!hash || hash !== paneKey) history.replaceState(null, '', '#' + paneKey);
+        showPane(paneKey, false);
+    }
+
+    aboutBtn.addEventListener('click', function() { showPane('about', true); });
+    menuBtn.addEventListener('click', function() { showPane('menu-pizza', true); });
+    orderBtn.addEventListener('click', function() { showPane('order', true); });
+
+    document.querySelectorAll('.menu-nav-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var cat = btn.getAttribute('data-cat');
+            showPane('menu-' + cat, true);
+        });
+    });
+
+    window.addEventListener('hashchange', syncFromHash);
+
+    updateLayout();
+    window.addEventListener('resize', updateLayout);
+    window.addEventListener('load', function() {
+        updateLayout();
+        syncFromHash();
+    });
+})();
+    </script>
+</body>
+</html>
