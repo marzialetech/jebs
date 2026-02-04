@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="48" viewBox="0 0 80 48">
+  <defs>
+    <pattern id="brick" x="0" y="0" width="80" height="48" patternUnits="userSpaceOnUse">
+      <!-- Mortar background -->
+      <rect width="80" height="48" fill="#c9b8a8"/>
+      <!-- Row 1: bricks centered, full width -->
+      <rect x="2" y="2" width="36" height="20" fill="#8b5a3c" rx="1"/>
+      <rect x="42" y="2" width="36" height="20" fill="#8b5a3c" rx="1"/>
+      <!-- Row 2: offset by half brick (40px) - running bond -->
+      <rect x="22" y="26" width="36" height="20" fill="#8b5a3c" rx="1"/>
+      <rect x="62" y="26" width="16" height="20" fill="#8b5a3c" rx="1"/>
+      <rect x="2" y="26" width="18" height="20" fill="#8b5a3c" rx="1"/>
+    </pattern>
+  </defs>
+  <rect width="80" height="48" fill="url(#brick)"/>
+</svg>

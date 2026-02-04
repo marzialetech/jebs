@@ -31,31 +31,15 @@
             background-repeat: repeat;
             color: #8b3a2e;
         }
-        .stripe-band {
+        .brick-band {
             position: fixed;
             left: 0;
             right: 0;
             z-index: 1;
-            background: linear-gradient(
-                90deg,
-                #8b5a3c 0%, #8b5a3c 6.666%,
-                #e8e0d5 6.666%, #e8e0d5 13.333%,
-                #8b5a3c 13.333%, #8b5a3c 20%,
-                #e8e0d5 20%, #e8e0d5 26.666%,
-                #8b5a3c 26.666%, #8b5a3c 33.333%,
-                #e8e0d5 33.333%, #e8e0d5 40%,
-                #8b5a3c 40%, #8b5a3c 46.666%,
-                #e8e0d5 46.666%, #e8e0d5 53.333%,
-                #8b5a3c 53.333%, #8b5a3c 60%,
-                #e8e0d5 60%, #e8e0d5 66.666%,
-                #8b5a3c 66.666%, #8b5a3c 73.333%,
-                #e8e0d5 73.333%, #e8e0d5 80%,
-                #8b5a3c 80%, #8b5a3c 86.666%,
-                #e8e0d5 86.666%, #e8e0d5 93.333%,
-                #8b5a3c 93.333%, #8b5a3c 100%
-            );
-            background-size: 100% 100%;
-            background-position: center;
+            background-color: #c9b8a8;
+            background-image: url(assets/brick-pattern.svg);
+            background-repeat: repeat;
+            background-size: 80px 48px;
         }
         .header {
             position: fixed;
@@ -409,7 +393,7 @@
     </style>
 </head>
 <body>
-    <div class="stripe-band" id="stripeBand"></div>
+    <div class="brick-band" id="brickBand"></div>
     <div class="header">
         <div class="logo-frame">
             <img src="assets/logo.png" alt="Jeb's Restaurant">
@@ -777,21 +761,21 @@
     const btnForHash = { about: aboutBtn, menu: menuBtn, order: orderBtn };
 
     function updateLayout() {
-        const stripeBand = document.getElementById('stripeBand');
+        const brickBand = document.getElementById('brickBand');
         const logoFrame = document.querySelector('.header .logo-frame');
         const iconBar = document.querySelector('.icon-bar');
         const menuNav = document.getElementById('menuNav');
-        if (!stripeBand || !logoFrame || !mainContent) return;
+        if (!brickBand || !logoFrame || !mainContent) return;
         const rect = logoFrame.getBoundingClientRect();
         const logoBottom = rect.bottom;
         const logoHeight = rect.height;
         const margin = logoHeight * 0.1;
-        const stripeTop = 0;
-        const stripeHeight = logoBottom + margin;
-        stripeBand.style.top = stripeTop + 'px';
-        stripeBand.style.height = stripeHeight + 'px';
+        const bandTop = 0;
+        const bandHeight = logoBottom + margin;
+        brickBand.style.top = bandTop + 'px';
+        brickBand.style.height = bandHeight + 'px';
         if (iconBar) {
-            iconBar.style.top = (stripeTop + stripeHeight) + 'px';
+            iconBar.style.top = (bandTop + bandHeight) + 'px';
             var topAnchor = iconBar.getBoundingClientRect().bottom;
             if (menuNav && menuPane.classList.contains('active')) {
                 menuNav.classList.add('visible');
