@@ -1,17 +1,20 @@
-# New York Pizzeria & Restaurant of Lowville
+# Jeb's Restaurant of Lowville
 
-Website for New York Pizzeria & Restaurant of Lowville. A minimal, no-scroll single-page site with menu, hours, and Stripe checkout.
+Website for Jeb's Restaurant of Lowville, NY. A minimal, single-page site with menu, hours, and Stripe checkout.
 
-## Live site
+## About
 
-- **Custom domain:** [https://nypizza.marziale.tech](https://nypizza.marziale.tech)
-- **GitHub Pages (fallback):** [https://marzialetech.github.io/nypizza/](https://marzialetech.github.io/nypizza/)
+Family owned and operated by Emerson and Jennifer (Lehman) Metzler since November 4th, 2002.
+
+**Address:** 5403 Shady Ave, Lowville, NY 13367  
+**Phone:** (315) 376-6029  
+**Facebook:** [JebsRestaurant](https://www.facebook.com/JebsRestaurant/)
 
 ## Local development
 
 Open `index.html` in a browser or serve with any static file server.
 
-## Stripe checkout (test mode)
+## Stripe checkout
 
 The Order page includes a full menu with add-to-cart and Stripe Checkout. To enable:
 
@@ -19,15 +22,13 @@ The Order page includes a full menu with add-to-cart and Stripe Checkout. To ena
    ```bash
    cd api && npm install && npx wrangler secret put STRIPE_SECRET_KEY
    ```
-   Use your Stripe test key (`sk_test_...`) from [dashboard.stripe.com](https://dashboard.stripe.com/test/apikeys).
+   Use your Stripe key from [dashboard.stripe.com](https://dashboard.stripe.com/apikeys).
 
 2. **Deploy the worker:**
    ```bash
    npm run deploy
    ```
 
-3. **Configure the API URL** in `index.html` if using a custom domain (default: `nypizza-api.marziale.tech`).
+3. **Configure the API URL** in `index.html` if using a custom domain.
 
 4. **Local testing:** Run `npm run dev` in the `api` folder. The frontend auto-uses `localhost:8787` when opened from localhost.
-
-**Note:** Chicken Wings are not in the order menu (call for pricing). All other menu items are available.

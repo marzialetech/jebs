@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New York Pizzeria</title>
+    <title>Jeb's Restaurant</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -219,11 +219,11 @@
             display: flex;
         }
         @media (max-width: 900px) {
-            /* 3 rows of 3 - no intermediate state where buttons hide */
+            /* 4 rows of 3 for 12 categories */
             .menu-nav.visible {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(3, auto);
+                grid-template-rows: repeat(4, auto);
             }
             .menu-nav-btn {
                 border-right: none !important;
@@ -233,7 +233,7 @@
             }
             .menu-nav-btn:last-child { border-right: 1px solid #c4a574 !important; }
             .menu-nav-btn:nth-child(3n) { border-right: 1px solid #c4a574 !important; }
-            .menu-nav-btn:nth-child(n+7) { border-bottom: 1px solid #c4a574 !important; }
+            .menu-nav-btn:nth-child(n+10) { border-bottom: 1px solid #c4a574 !important; }
         }
         .menu-nav-btn {
             flex: 1 1 0;
@@ -254,15 +254,18 @@
         }
         .menu-nav-btn:last-child { border-right: 1px solid #c4a574; }
         .menu-nav-btn:hover { background: #8f7358; }
-        .menu-nav-btn:nth-child(1) { flex: 1 1 5ch; }
+        .menu-nav-btn:nth-child(1) { flex: 1 1 8ch; }
         .menu-nav-btn:nth-child(2) { flex: 1 1 10ch; }
-        .menu-nav-btn:nth-child(3) { flex: 1 1 6ch; }
-        .menu-nav-btn:nth-child(4) { flex: 1 1 5ch; }
-        .menu-nav-btn:nth-child(5) { flex: 1 1 4ch; }
-        .menu-nav-btn:nth-child(6) { flex: 1 1 7ch; }
-        .menu-nav-btn:nth-child(7) { flex: 1 1 14ch; }
+        .menu-nav-btn:nth-child(3) { flex: 1 1 12ch; }
+        .menu-nav-btn:nth-child(4) { flex: 1 1 7ch; }
+        .menu-nav-btn:nth-child(5) { flex: 1 1 6ch; }
+        .menu-nav-btn:nth-child(6) { flex: 1 1 10ch; }
+        .menu-nav-btn:nth-child(7) { flex: 1 1 6ch; }
         .menu-nav-btn:nth-child(8) { flex: 1 1 7ch; }
-        .menu-nav-btn:nth-child(9) { flex: 1 1 8ch; }
+        .menu-nav-btn:nth-child(9) { flex: 1 1 7ch; }
+        .menu-nav-btn:nth-child(10) { flex: 1 1 5ch; }
+        .menu-nav-btn:nth-child(11) { flex: 1 1 9ch; }
+        .menu-nav-btn:nth-child(12) { flex: 1 1 9ch; }
         .menu-nav-btn::before {
             content: '';
             display: inline-block;
@@ -406,7 +409,7 @@
     <div class="stripe-band" id="stripeBand"></div>
     <div class="header">
         <div class="logo-frame">
-            <img src="assets/logo-text-red.svg" alt="New York Pizzeria">
+            <img src="assets/logo.svg" alt="Jeb's Restaurant">
         </div>
     </div>
 
@@ -417,269 +420,298 @@
     </div>
 
     <div class="menu-nav" id="menuNav">
-        <button class="menu-nav-btn" data-cat="pizza">Pizza</button>
-        <button class="menu-nav-btn" data-cat="appetizers">Appetizers</button>
-        <button class="menu-nav-btn" data-cat="salads">Salads</button>
-        <button class="menu-nav-btn" data-cat="wings">Wings</button>
-        <button class="menu-nav-btn" data-cat="subs">Subs</button>
-        <button class="menu-nav-btn" data-cat="tunnels">Tunnels</button>
-        <button class="menu-nav-btn" data-cat="pockets">Pockets & Rolls</button>
-        <button class="menu-nav-btn" data-cat="dinners">Dinners</button>
-        <button class="menu-nav-btn" data-cat="desserts">Desserts</button>
+        <button class="menu-nav-btn" data-cat="starters">Starters</button>
+        <button class="menu-nav-btn" data-cat="specialties">Specialties</button>
+        <button class="menu-nav-btn" data-cat="soups-salads">Soups & Salads</button>
+        <button class="menu-nav-btn" data-cat="burgers">Burgers</button>
+        <button class="menu-nav-btn" data-cat="wraps">Wraps</button>
+        <button class="menu-nav-btn" data-cat="sandwiches">Sandwiches</button>
+        <button class="menu-nav-btn" data-cat="pastas">Pastas</button>
+        <button class="menu-nav-btn" data-cat="seafood">Seafood</button>
+        <button class="menu-nav-btn" data-cat="chicken">Chicken</button>
+        <button class="menu-nav-btn" data-cat="beef">Beef</button>
+        <button class="menu-nav-btn" data-cat="breakfast">Breakfast</button>
+        <button class="menu-nav-btn" data-cat="beverages">Beverages</button>
     </div>
 
     <main class="main-content" id="mainContent">
         <div class="content-pane about-pane" id="aboutPane">
             <div class="about-block wide about-hero">
-                <h4 class="about-title">New York Pizzeria & Restaurant of Lowville</h4>
-                <p class="about-subtitle">The Carbonaro family & staff welcome you!</p>
+                <h4 class="about-title">Jeb's Restaurant of Lowville</h4>
+                <p class="about-subtitle">The Metzler family & staff welcome you!</p>
             </div>
             <div class="about-split">
                 <div class="about-left">
                     <div class="about-block">
-                        <h4>Take-outs & Delivery</h4>
-                        <p>In Town Deliveries Only — 11am–2pm & 5pm–8pm<br>$5 Delivery Charge · $25 minimum</p>
+                        <h4>About Us</h4>
+                        <p>Family owned and operated by Emerson and Jennifer (Lehman) Metzler since November 4th, 2002. We cater to families, businesses, large parties, and casual diners. We welcome locals, snowmobilers, skiers, vacationers, and travelers passing through!</p>
                     </div>
                     <div class="about-block">
-                        <h4>We Do Catering!</h4>
-                        <p>Special event? Let us help! Holiday parties, business functions, family gatherings, school events.</p>
+                        <h4>Private Events</h4>
+                        <p>We have a private dining area for birthday parties, showers, rehearsal dinners, and more. Our staff strives to make your event simple and enjoyable!</p>
                     </div>
                 </div>
                 <div class="about-right">
                     <div class="about-block">
-                        <h4>Winter Hours</h4>
+                        <h4>Hours</h4>
                         <table class="hours-table">
-                            <tr><td>Tuesday–Thursday</td><td>10am–9pm</td></tr>
-                            <tr><td>Friday & Saturday</td><td>11am–10pm</td></tr>
-                            <tr><td>Sunday</td><td>12pm–8pm</td></tr>
-                            <tr><td>Monday</td><td>Closed</td></tr>
+                            <tr><td>Monday–Thursday</td><td>11am–9pm (Bar til 10pm)</td></tr>
+                            <tr><td>Friday</td><td>11am–10pm (Bar til midnight)</td></tr>
+                            <tr><td>Saturday</td><td>8am–10pm (Bar til midnight)</td></tr>
+                            <tr><td>Sunday</td><td>8am–8pm</td></tr>
                         </table>
                     </div>
                     <div class="about-block">
-                        <h4>Summer Hours</h4>
-                        <table class="hours-table">
-                            <tr><td>Tuesday–Thursday</td><td>11am–2pm & 4pm–9pm</td></tr>
-                            <tr><td>Friday & Saturday</td><td>11am–10pm</td></tr>
-                            <tr><td>Sunday</td><td>12pm–9pm</td></tr>
-                            <tr><td>Monday</td><td>Closed</td></tr>
-                        </table>
+                        <h4>Our Space</h4>
+                        <p>Our historic building was built in the 1920s as a post office. Features include original tin ceilings, Tiffany-style chandeliers, cozy booths, and our bar with 5 big screen TVs, fireplace, pool table, and darts!</p>
                     </div>
                 </div>
             </div>
             <div class="about-block wide about-footer">
-                <p>7580 South State St. · Lowville, NY · <a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
-                <p><em>Prices subject to change without notice.</em></p>
+                <p>5403 Shady Ave · Lowville, NY 13367 · <a href="tel:+13153766029">315-376-6029</a> · <a href="https://www.facebook.com/JebsRestaurant/" target="_blank">Facebook</a></p>
+                <p><em>Parking on street or in public lot behind Lowville Town Hall Theater. Prices subject to change.</em></p>
             </div>
         </div>
 
         <div class="content-pane menu-pane" id="menuPane">
-            <div class="menu-sub" id="menu-sub-appetizers">
+            <div class="menu-sub active" id="menu-sub-starters">
                 <div class="menu-sub-content">
                     <div class="menu-section">
-                        <h4>Appetizers</h4>
+                        <h4>Super Starters</h4>
+                        <p class="menu-note">Wing Sauces: Medium, Mild, Fire, BBQ, Sweet, Bourbon, Jeb's, Honey Mustard, Chipotle, Garlic Butter, Boss, Black Dust</p>
                         <table class="menu-table">
-                            <tr><td>French Fries</td><td>5.50</td></tr>
-                            <tr><td>Pizza Logs (5)</td><td>9.95</td></tr>
-                            <tr><td>Bread Sticks (6)</td><td>8.50</td></tr>
-                            <tr><td>Bread Sticks (12)</td><td>16.50</td></tr>
-                            <tr><td>Garlic Bread w/ cheese</td><td>6.25</td></tr>
-                            <tr><td>Bruschetta Bread</td><td>7.25</td></tr>
-                            <tr><td>Chicken Fingers (6)</td><td>10.75</td></tr>
-                            <tr><td>Chicken Fingers (12)</td><td>21.75</td></tr>
-                            <tr><td>Mozzarella Sticks (6)</td><td>9.25</td></tr>
-                            <tr><td>Mozzarella Sticks (12)</td><td>17.00</td></tr>
-                            <tr><td>Breaded Mushrooms</td><td>9.75</td></tr>
-                            <tr><td>Breaded Cauliflower</td><td>9.75</td></tr>
-                            <tr><td>Garlic Knots (8)</td><td>9.00</td></tr>
-                            <tr><td>Fried Calamari</td><td>16.95</td></tr>
-                            <tr><td>Mussels</td><td>19.95</td></tr>
+                            <tr><td>Jeb's Sampler</td><td>12.25</td></tr>
+                            <tr><td>Loaded Nachos</td><td>13.96</td></tr>
+                            <tr><td>Spinach and Artichoke Dip</td><td>8.95</td></tr>
+                            <tr><td>Loaded Potato Skins</td><td>9.50</td></tr>
+                            <tr><td>Chicken Quesadillas</td><td>12.95</td></tr>
                             <tr><td>Onion Rings</td><td>8.95</td></tr>
+                            <tr><td>Cajun Mushrooms</td><td>9.95</td></tr>
+                            <tr><td>Portobello Mushrooms</td><td>9.95</td></tr>
+                            <tr><td>Loaded Fries</td><td>10.95</td></tr>
+                            <tr><td>Mozzarella Sticks</td><td>8.05</td></tr>
+                            <tr><td>Potstickers</td><td>9.95</td></tr>
+                            <tr><td>Jumbo Wings (10)</td><td>14.95</td></tr>
+                            <tr><td>Boneless Wings (12)</td><td>10.95</td></tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="menu-sub" id="menu-sub-salads">
+            <div class="menu-sub" id="menu-sub-specialties">
                 <div class="menu-sub-content">
                     <div class="menu-section">
-                        <h4>Salads</h4>
+                        <h4>Jeb's Specialties</h4>
                         <table class="menu-table">
-                            <tr><td>Tossed Salad SM</td><td>5.95</td></tr>
-                            <tr><td>Tossed Salad LG</td><td>8.50</td></tr>
-                            <tr><td>Antipasto Salad</td><td>12.95</td></tr>
-                            <tr><td>Chef's Salad</td><td>13.50</td></tr>
-                            <tr><td>Crispy Chicken Salad</td><td>16.95</td></tr>
+                            <tr><td>Chicken Chimichanga</td><td>15.95</td></tr>
+                            <tr><td>Fish Tacos</td><td>10.95</td></tr>
+                            <tr><td>Primavera Pizza</td><td>11.95</td></tr>
+                            <tr><td>Signature Baby Back Ribs (Full Rack)</td><td>27.95</td></tr>
+                            <tr><td>Signature Baby Back Ribs (Half Rack)</td><td>17.95</td></tr>
+                            <tr><td>Sizzlin' Fajitas</td><td>18.95</td></tr>
+                            <tr><td>Tex Mex Bowl</td><td>12.95</td></tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="menu-sub" id="menu-sub-wings">
+            <div class="menu-sub" id="menu-sub-soups-salads">
                 <div class="menu-sub-content">
                     <div class="menu-section">
-                        <h4>Chicken Wings</h4>
+                        <h4>Scrumptious Soups & Salads</h4>
+                        <p class="menu-note">Dressings: Bleu Cheese, Ranch, Italian, Thousand Islands, Parmesan Peppercorn, Honey Mustard, Caesar, Avocado Ranch, Light Raspberry Vinaigrette, Balsamic Vinaigrette, Oil and Vinegar</p>
                         <table class="menu-table">
-                            <tr><td>Split wings</td><td>+2.00</td></tr>
-                            <tr><td>Blue cheese</td><td>2.00 each</td></tr>
-                            <tr><td>Extra wing sauce</td><td>3.00</td></tr>
-                            <tr><td colspan="2">Call for pricing. Mild, hot, extra hot, garlic, sweet, honey mustard, barbecue. Honey mustard/bbq +1.00 · Mixed +2.00</td></tr>
+                            <tr><td>Crock of Homemade French Onion Soup</td><td>6.25</td></tr>
+                            <tr><td>Homemade Soup of the Day (Bowl)</td><td>6.25</td></tr>
+                            <tr><td>Homemade Soup of the Day (Cup)</td><td>4.75</td></tr>
+                            <tr><td>Soup and Salad Combo</td><td>13.95</td></tr>
+                            <tr><td>Buffalo Chicken Salad</td><td>12.95</td></tr>
+                            <tr><td>Caesar Salad</td><td>10.95</td></tr>
+                            <tr><td>Cobb Salad</td><td>11.05</td></tr>
+                            <tr><td>Fajita Salad</td><td>13.95</td></tr>
+                            <tr><td>Fiesta Lime Salad</td><td>11.95</td></tr>
+                            <tr><td>Mandarin Chicken Salad</td><td>14.05</td></tr>
+                            <tr><td>Mediterranean Steak Salad</td><td>14.95</td></tr>
+                            <tr><td>Southwest Cobb</td><td>14.75</td></tr>
+                            <tr><td>Taco Salad</td><td>12.95</td></tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="menu-sub" id="menu-sub-subs">
+            <div class="menu-sub" id="menu-sub-burgers">
                 <div class="menu-sub-content">
                     <div class="menu-section">
-                        <h4>Lunch Subs</h4>
-                        <p class="menu-note">12" bread, one size</p>
+                        <h4>Bodacious Burgers</h4>
+                        <p class="menu-note">All burgers are fresh 1/2 lb. with lettuce, tomato, onion, pickle and fries or chips. Veggie or turkey burger available. Substitute onion rings $2.99</p>
                         <table class="menu-table">
-                            <tr><td>Salami</td><td>12.00</td></tr>
-                            <tr><td>Mixed</td><td>12.00</td></tr>
-                            <tr><td>Ham</td><td>12.00</td></tr>
-                            <tr><td>Turkey</td><td>12.00</td></tr>
-                            <tr><td>Roast Beef</td><td>12.00</td></tr>
+                            <tr><td>Adirondack Burger</td><td>14.95</td></tr>
+                            <tr><td>Basic Burger</td><td>11.50</td></tr>
+                            <tr><td>Buffalo Bleu Burger</td><td>13.95</td></tr>
+                            <tr><td>House Burger</td><td>16.25</td></tr>
+                            <tr><td>Jeb's Burger</td><td>14.85</td></tr>
+                            <tr><td>Local Grass-Fed Burger</td><td>14.95</td></tr>
+                            <tr><td>Mushroom Swiss Burger</td><td>13.99</td></tr>
+                            <tr><td>Patty Melt</td><td>13.99</td></tr>
+                            <tr><td>Quesadilla Burger</td><td>13.99</td></tr>
+                            <tr><td>Texas Burger</td><td>14.95</td></tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="menu-sub active" id="menu-sub-pizza">
+            <div class="menu-sub" id="menu-sub-wraps">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Wow Wraps</h4>
+                        <p class="menu-note">Served with chips or fries and pickle. Wheat or white tortilla. All wraps available vegetarian style.</p>
+                        <table class="menu-table">
+                            <tr><td>Adirondack Chicken Wrap</td><td>14.25</td></tr>
+                            <tr><td>Buffalo Chicken Wrap</td><td>12.95</td></tr>
+                            <tr><td>Cheesesteak Wrap</td><td>13.95</td></tr>
+                            <tr><td>Chicken Artichoke Wrap</td><td>12.95</td></tr>
+                            <tr><td>Chicken Caesar Wrap</td><td>12.95</td></tr>
+                            <tr><td>Chicken Fajita Wrap</td><td>12.95</td></tr>
+                            <tr><td>Chicken Portobello Wrap</td><td>13.95</td></tr>
+                            <tr><td>Ranchero Chicken Wrap</td><td>12.95</td></tr>
+                            <tr><td>Vegan Wrap</td><td>12.05</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-sandwiches">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Sassy Sandwiches</h4>
+                        <p class="menu-note">Served with fries or chips and pickle. Substitute onion rings $2.99</p>
+                        <table class="menu-table">
+                            <tr><td>Shaved Prime Rib</td><td>18.95</td></tr>
+                            <tr><td>Chicken Philly</td><td>15.95</td></tr>
+                            <tr><td>Bacon Cheddar Chicken Grill</td><td>14.95</td></tr>
+                            <tr><td>Chicken Cordon Blue Sandwich</td><td>14.95</td></tr>
+                            <tr><td>Buffalo Chicken Sandwich</td><td>14.95</td></tr>
+                            <tr><td>Grilled Club</td><td>14.95</td></tr>
+                            <tr><td>Grilled Cheese</td><td>11.95</td></tr>
+                            <tr><td>Lemon Herb Sole Sandwich</td><td>14.95</td></tr>
+                            <tr><td>Grilled Reuben Sandwich</td><td>15.95</td></tr>
+                            <tr><td>Jeb's Big Bleu Flatbread</td><td>15.95</td></tr>
+                            <tr><td>Steak and Horsey Sandwich</td><td>18.05</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-pastas">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Perfection Pastas</h4>
+                        <p class="menu-note">Served with a side of garlic bread. Add a side salad $2.99</p>
+                        <table class="menu-table">
+                            <tr><td>Chicken Penne Vodka</td><td>17.95</td></tr>
+                            <tr><td>Pasta Marinara or Alfredo</td><td>14.95</td></tr>
+                            <tr><td>Chicken and Broccoli Alfredo</td><td>17.95</td></tr>
+                            <tr><td>Seafood Alfredo</td><td>23.50</td></tr>
+                            <tr><td>Steak and Mushroom Alfredo</td><td>23.95</td></tr>
+                            <tr><td>Buffalo Chicken Pasta</td><td>17.95</td></tr>
+                            <tr><td>Cajun Shrimp Alfredo</td><td>23.50</td></tr>
+                            <tr><td>Steakhouse Alfredo</td><td>23.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-seafood">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Sumptuous Seafood</h4>
+                        <p class="menu-note">Served with choice of 2 sides. Add garlic shrimp $4.25, side salad $2.99</p>
+                        <table class="menu-table">
+                            <tr><td>Broiled Scallops</td><td>25.95</td></tr>
+                            <tr><td>Broiled, Lemon Pepper or Cajun Haddock</td><td>22.95</td></tr>
+                            <tr><td>Captain's Platter</td><td>25.95</td></tr>
+                            <tr><td>Haddock Florentine</td><td>23.95</td></tr>
+                            <tr><td>Salmon Normandy</td><td>27.95</td></tr>
+                            <tr><td>Shrimp Platter</td><td>27.95</td></tr>
+                            <tr><td>Shrimp Scampi</td><td>19.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-chicken">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Bistro Chicken</h4>
+                        <p class="menu-note">Served with choice of 2 sides: Garlic Mashed Potatoes, Fries, Rice Pilaf, Vegetables, Broccoli, Coleslaw, Applesauce</p>
+                        <table class="menu-table">
+                            <tr><td>Chicken Portobello Skillet</td><td>19.95</td></tr>
+                            <tr><td>Smothered Chicken Skillet</td><td>19.95</td></tr>
+                            <tr><td>Adirondack Mountain Chicken</td><td>19.95</td></tr>
+                            <tr><td>Mediterranean Chicken</td><td>19.15</td></tr>
+                            <tr><td>Chicken Tenders Platter</td><td>14.95</td></tr>
+                            <tr><td>Chicken Parmesan</td><td>19.25</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-beef">
+                <div class="menu-sub-content">
+                    <div class="menu-section">
+                        <h4>Beautiful Beef</h4>
+                        <p class="menu-note">Served with 2 sides. Toppings: Black & Bleu $4.00, Bourbon $3.00, Limano $3.75, Portobello $4.75</p>
+                        <table class="menu-table">
+                            <tr><td>New York Strip (12 oz)</td><td>28.95</td></tr>
+                            <tr><td>Ribeye (16 oz)</td><td>31.95</td></tr>
+                            <tr><td>Sirloin (8 oz)</td><td>27.95</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-sub" id="menu-sub-breakfast">
                 <div class="menu-sub-content menu-pizza-halves">
                     <div>
                         <div class="menu-section">
-                            <h4>Pizza</h4>
-                            <p class="menu-note">Homemade dough & sauce daily</p>
+                            <h4>Breakfast</h4>
+                            <p class="menu-note">Served Saturday & Sunday 8am-11am</p>
                             <table class="menu-table">
-                            <tr><td>Cheese SM</td><td>18.95</td></tr>
-                            <tr><td>Cheese LG</td><td>20.95</td></tr>
-                            <tr><td>Cheese XLG</td><td>24.95</td></tr>
-                            <tr><td>Toppings SM/LG</td><td>3.00</td></tr>
-                            <tr><td>Toppings XLG</td><td>4.00</td></tr>
-                            <tr><td>Special toppings SM</td><td>3.00</td></tr>
-                            <tr><td>Special toppings LG</td><td>4.00</td></tr>
-                            <tr><td>Special toppings XLG</td><td>5.00</td></tr>
-                            <tr><td colspan="2">Standard: Sausage, Meatballs, Pepperoni, Ham, Peppers, Onions, Mushrooms, Olives</td></tr>
-                            <tr><td colspan="2">Special: Bacon, Broccoli, Spinach, Pineapple, Chicken, Tomato, Anchovies</td></tr>
-                        </table>
+                                <tr><td>Adirondack Mountain Breakfast</td><td>17.99</td></tr>
+                                <tr><td>Average Joe</td><td>11.95</td></tr>
+                                <tr><td>Little Joe</td><td>8.95</td></tr>
+                                <tr><td>Lewis County Steak and Eggs</td><td>20.95</td></tr>
+                                <tr><td>Jeb's Benedict</td><td>12.25</td></tr>
+                                <tr><td>Early Riser Egg Sandwich</td><td>11.95</td></tr>
+                                <tr><td>Fiesta Breakfast Burrito</td><td>12.25</td></tr>
+                                <tr><td>Stuffed French Toast</td><td>12.25</td></tr>
+                                <tr><td>Short Stack Pancakes</td><td>6.50</td></tr>
+                                <tr><td>Tall Stack Pancakes</td><td>7.25</td></tr>
+                                <tr><td>Blueberry Short Stack</td><td>7.25</td></tr>
+                                <tr><td>Blueberry Tall Stack</td><td>8.50</td></tr>
+                                <tr><td>French Toast Short Tower</td><td>6.50</td></tr>
+                                <tr><td>French Toast Tall Tower</td><td>7.25</td></tr>
+                                <tr><td>French Toast Strawberry Tower</td><td>7.25-8.50</td></tr>
+                            </table>
                         </div>
                     </div>
                     <div>
-                    <div class="menu-section">
-                        <h4>Special Pizza</h4>
-                        <table class="menu-table">
-                            <tr><td>Garlic SM/LG/XLG</td><td>16.95/20.95/20.25</td></tr>
-                            <tr><td>Chicken Bacon Ranch SM/LG/XLG</td><td>25.95/29.95/31.95</td></tr>
-                            <tr><td>Chicken Parm SM/LG/XLG</td><td>20.95/24.50/27.00</td></tr>
-                            <tr><td>Broccoli SM/LG/XLG</td><td>21.95/24.95/25.50</td></tr>
-                            <tr><td>Chicken SM/LG/XLG</td><td>21.95/23.50/25.50</td></tr>
-                            <tr><td>Chicken Vodka LG</td><td>27.95</td></tr>
-                            <tr><td>Bacon SM/LG/XLG</td><td>20.95/23.95/25.95</td></tr>
-                            <tr><td>Veggie SM/LG/XLG</td><td>25.95/28.95/31.95</td></tr>
-                            <tr><td>Tomato SM/LG/XLG</td><td>21.50/24.95/26.50</td></tr>
-                            <tr><td>Chicken & Broccoli SM/LG</td><td>22.50/25.95</td></tr>
-                            <tr><td>Chicken & Tomato SM/LG</td><td>21.95/25.95</td></tr>
-                            <tr><td>Chicken Wing SM/LG/XLG</td><td>19.95/26.95/29.95</td></tr>
-                            <tr><td>Meatlovers SM/LG/XLG</td><td>26.95/33.95/34.95</td></tr>
-                            <tr><td>Spinach SM/LG</td><td>21.95/23.95</td></tr>
-                            <tr><td>White Ricotta SM/LG/XLG</td><td>23.95/25.95/26.95</td></tr>
-                            <tr><td>Steak SM/LG/XLG</td><td>21.95/24.95/26.95</td></tr>
-                            <tr><td>Pesto SM/LG/XLG</td><td>21.95/24.95/26.95</td></tr>
-                            <tr><td>Calzone LG/XLG</td><td>29.50/31.50</td></tr>
-                            <tr><td>Stromboli LG/XLG</td><td>31.95/33.50</td></tr>
-                            <tr><td>Stuffed Pizza LG/XLG</td><td>31.95/33.50</td></tr>
-                            <tr><td>Baked Ziti SM/LG/XLG</td><td>18.50/21.50/23.50</td></tr>
-                            <tr><td>Gluten Free SM</td><td>13.75</td></tr>
-                            <tr><td>Sheet 24 slices</td><td>34.95</td></tr>
-                            <tr><td>Sicilian 12 slices</td><td>27.95</td></tr>
-                        </table>
-                    </div>
+                        <div class="menu-section">
+                            <h4>Omelets & Skillets</h4>
+                            <table class="menu-table">
+                                <tr><td>All American</td><td>12.95</td></tr>
+                                <tr><td>Basic Cheese</td><td>11.95</td></tr>
+                                <tr><td>Buffalo Chicken</td><td>11.95</td></tr>
+                                <tr><td>Build Your Own Fajita</td><td>12.95</td></tr>
+                                <tr><td>Cheese Steak</td><td>12.95</td></tr>
+                                <tr><td>Fajita</td><td>12.95</td></tr>
+                                <tr><td>Veggie Lovers</td><td>11.95</td></tr>
+                                <tr><td>Florentine Skillet</td><td>12.95</td></tr>
+                                <tr><td>Meat-Lover's Skillet</td><td>14.95</td></tr>
+                                <tr><td>Santa Fe Skillet</td><td>12.95</td></tr>
+                                <tr><td>Sausage Skillet</td><td>12.95</td></tr>
+                                <tr><td>Steak Skillet</td><td>18.95</td></tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="menu-sub" id="menu-sub-tunnels">
+            <div class="menu-sub" id="menu-sub-beverages">
                 <div class="menu-sub-content">
                     <div class="menu-section">
-                        <h4>Tunnels</h4>
-                        <p class="menu-note">12" bread. Extra toppings .75 · Fries 3.00</p>
-                        <table class="menu-table">
-                            <tr><td>Meatball w/ cheese & sauce</td><td>13.75</td></tr>
-                            <tr><td>Eggplant</td><td>12.75</td></tr>
-                            <tr><td>Chicken Parmesan</td><td>13.75</td></tr>
-                            <tr><td>Sausage and Peppers</td><td>13.75</td></tr>
-                            <tr><td>Sausage</td><td>13.75</td></tr>
-                            <tr><td>Steak Sandwich</td><td>14.75</td></tr>
-                            <tr><td>Pizza Sub</td><td>12.75</td></tr>
-                            <tr><td>Hot Roast Beef w/ Gravy</td><td>14.75</td></tr>
-                            <tr><td>Hot Turkey w/ Gravy</td><td>13.75</td></tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="menu-sub" id="menu-sub-pockets">
-                <div class="menu-sub-content">
-                    <div class="menu-section">
-                        <h4>Pockets & Rolls</h4>
-                        <p class="menu-note">For two. Pizza sauce included. Extra toppings 1.50</p>
-                        <table class="menu-table">
-                            <tr><td>Pepperoni Roll</td><td>14.95</td></tr>
-                            <tr><td>Stromboli Roll</td><td>15.95</td></tr>
-                            <tr><td>Cheese Calzone</td><td>12.95</td></tr>
-                            <tr><td>Broccoli Roll</td><td>14.95</td></tr>
-                            <tr><td>Ham Roll</td><td>14.95</td></tr>
-                            <tr><td>Sausage Roll</td><td>14.95</td></tr>
-                            <tr><td>Buffalo Chicken Calzone</td><td>15.95</td></tr>
-                            <tr><td>Steak Calzone</td><td>17.95</td></tr>
-                            <tr><td>Meat Lovers Calzone</td><td>19.95</td></tr>
-                            <tr><td>Italian Special Calzone</td><td>15.95</td></tr>
-                            <tr><td>Veggie Calzone</td><td>15.95</td></tr>
-                            <tr><td>Calzone Pocket</td><td>13.95</td></tr>
-                            <tr><td>Sicilian Calzone</td><td>16.95</td></tr>
-                            <tr><td>Eggplant Parm Calzone</td><td>16.95</td></tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="menu-sub" id="menu-sub-dinners">
-                <div class="menu-sub-content">
-                    <div class="menu-section">
-                        <h4>Dinners</h4>
-                        <p class="menu-note">Garlic bread & tossed salad. Split 2.00</p>
-                        <table class="menu-table">
-                            <tr><td>Chicken Riggies</td><td>21.50</td></tr>
-                            <tr><td>Meat Tortellini</td><td>20.95</td></tr>
-                            <tr><td>Stuffed Shells</td><td>20.95</td></tr>
-                            <tr><td>Gnocchi</td><td>20.95</td></tr>
-                            <tr><td>Lasagna</td><td>21.95</td></tr>
-                            <tr><td>Baked Ziti</td><td>20.95</td></tr>
-                            <tr><td>Cheese Ravioli</td><td>21.95</td></tr>
-                            <tr><td>Spaghetti</td><td>14.95</td></tr>
-                            <tr><td>+ meatballs or sausage</td><td>3.00</td></tr>
-                            <tr><td>Chicken Parmesan</td><td>21.50</td></tr>
-                            <tr><td>Penne Arrabbiata</td><td>19.95</td></tr>
-                            <tr><td>Side meatballs/sausage</td><td>7.75</td></tr>
-                            <tr><td>Linguini clam sauce</td><td>21.95</td></tr>
-                            <tr><td>Linguini Alfredo</td><td>21.50</td></tr>
-                            <tr><td>Linguini Alfredo w/ chicken & broccoli</td><td>22.50</td></tr>
-                            <tr><td>Linguini Alfredo w/ chicken</td><td>21.95</td></tr>
-                            <tr><td>Penne Amatriciana</td><td>21.50</td></tr>
-                            <tr><td>Eggplant Parm</td><td>20.95</td></tr>
-                            <tr><td>Spaghetti Pesto</td><td>19.95</td></tr>
-                            <tr><td>Spaghetti Garlic & Oil</td><td>13.50</td></tr>
-                            <tr><td>Cavatelli w/ broccoli</td><td>21.50</td></tr>
-                            <tr><td>Manicotti</td><td>20.95</td></tr>
-                            <tr><td>Fried Haddock</td><td>17.96</td></tr>
-                            <tr><td>Chicken and Vodka</td><td>21.95</td></tr>
-                            <tr><td>Rigatoni with Vodka</td><td>19.95</td></tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="menu-sub" id="menu-sub-desserts">
-                <div class="menu-sub-content">
-                    <div class="menu-section">
-                        <h4>Italian Desserts</h4>
-                        <table class="menu-table">
-                            <tr><td>Cannoli</td><td>5.95</td></tr>
-                            <tr><td>Tiramisu</td><td>7.95</td></tr>
-                            <tr><td>Fried Dough</td><td>5.95</td></tr>
-                        </table>
+                        <h4>Beverages</h4>
+                        <p class="menu-note">Ask About Our Bar's Selection of Beer, Wine and Liquor.</p>
+                        <p>Our jeb's Bar has 5 big screen TVs, a fireplace, cozy couches, juke box, pool table and darts available.</p>
                     </div>
                 </div>
             </div>
@@ -703,7 +735,7 @@
                         <div class="order-checkout">
                             <button type="button" class="order-checkout-btn" disabled>Checkout with Stripe</button>
                         </div>
-                        <p class="order-phone">Or call <a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
+                        <p class="order-phone">Or call <a href="tel:+13153766029">315-376-6029</a></p>
                     </div>
                 </div>
                 <div class="order-cart order-cart-bottom">
@@ -714,7 +746,7 @@
                         <div class="order-checkout">
                             <button type="button" class="order-checkout-btn" disabled>Checkout with Stripe</button>
                         </div>
-                        <p class="order-phone">Or call <a href="tel:+13153764420">315-376-4420</a> · <a href="tel:+13153764427">315-376-4427</a></p>
+                        <p class="order-phone">Or call <a href="tel:+13153766029">315-376-6029</a></p>
                     </div>
                 </div>
             </div>
@@ -735,8 +767,8 @@
     const allPanes = [aboutPane, menuPane, orderPane];
 
     const DEFAULT_PANE = 'about';
-    const DEFAULT_MENU_CAT = 'pizza';
-    const MENU_CATS = ['pizza','appetizers','salads','wings','subs','tunnels','pockets','dinners','desserts'];
+    const DEFAULT_MENU_CAT = 'starters';
+    const MENU_CATS = ['starters','specialties','soups-salads','burgers','wraps','sandwiches','pastas','seafood','chicken','beef','breakfast','beverages'];
     const hashFor = { about: 'about', menu: 'menu', order: 'order' };
     const paneForHash = { about: aboutPane, menu: menuPane, order: orderPane };
     const btnForHash = { about: aboutBtn, menu: menuBtn, order: orderBtn };
@@ -823,7 +855,7 @@
         var DELIVERY_MIN = 25;
         var API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
             ? 'http://localhost:8787'
-            : 'https://nypizza-api.jm-306.workers.dev';
+            : 'https://jebs-api.jm-306.workers.dev';
 
         function getOrderType() {
             return document.querySelector('input[name="orderType"]:checked')?.value || 'pickup';
@@ -954,7 +986,7 @@
                 else throw new Error('No checkout URL');
             }).catch(function(err) {
                 console.error(err);
-                alert('Checkout failed. Please call to order: 315-376-4420');
+                alert('Checkout failed. Please call to order: 315-376-6029');
                 document.querySelectorAll('.order-checkout-btn').forEach(function(btn) { btn.disabled = false; });
             });
         }

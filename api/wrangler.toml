@@ -1,4 +1,4 @@
-name = "nypizza-api"
+name = "jebs-api"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
