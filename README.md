@@ -32,3 +32,15 @@ The Order page includes a full menu with add-to-cart and Stripe Checkout. To ena
 3. **Configure the API URL** in `index.html` if using a custom domain.
 
 4. **Local testing:** Run `npm run dev` in the `api` folder. The frontend auto-uses `localhost:8787` when opened from localhost.
+
+## Employment applications
+
+The Apply page offers a PDF download or online form submission. To receive applications via email:
+
+1. Create an account at [resend.com](https://resend.com) and get an API key.
+2. Set secrets:
+   ```bash
+   npx wrangler secret put RESEND_API_KEY
+   npx wrangler secret put JEB_APPLICATION_EMAIL   # e.g. jebs@jebsrestaurant.com
+   ```
+3. Redeploy the API. Without these secrets, submissions are logged but not emailed.

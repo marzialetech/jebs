@@ -352,6 +352,25 @@
         .order-checkout-btn:disabled { background: #999; cursor: not-allowed; }
         .order-phone { margin-top: 16px; font-size: 15px; color: #666; }
         .order-cart-bottom { display: none; }
+
+        .apply-pane { font-size: 17px; overflow: auto; }
+        .apply-hero { text-align: center; margin-bottom: 24px; }
+        .apply-options { display: flex; gap: 32px; flex-wrap: wrap; }
+        .apply-option { flex: 1 1 320px; min-width: 0; }
+        .apply-option h5 { margin: 0 0 8px 0; color: #9e4538; font-size: 1.3em; font-style: italic; }
+        .apply-btn { display: inline-block; background: #9e4538; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; margin-top: 12px; }
+        .apply-btn:hover { background: #b85a48; }
+        .apply-form-wrapper { margin-top: 16px; }
+        .apply-form fieldset { border: 1px solid #b87a65; border-radius: 8px; padding: 16px; margin-bottom: 20px; background: #e8e0d5; }
+        .apply-form legend { color: #9e4538; font-weight: 700; padding: 0 8px; }
+        .apply-form label { display: block; margin-bottom: 10px; }
+        .apply-form label input, .apply-form label select, .apply-form label textarea { margin-left: 8px; min-width: 120px; }
+        .apply-form .form-row { display: flex; flex-wrap: wrap; gap: 16px; }
+        .apply-form .form-row label { flex: 1 1 180px; }
+        .apply-form .edu-row, .apply-form .employer-block, .apply-form .ref-block { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #d8c8b8; }
+        .apply-form .cert-text { font-size: 0.9em; margin-bottom: 12px; color: #555; }
+        .apply-submit-btn { background: #9e4538; color: #fff; border: none; padding: 14px 28px; border-radius: 8px; font-size: 18px; font-weight: 700; cursor: pointer; font-family: inherit; }
+        .apply-submit-btn:hover { background: #b85a48; }
         @media (max-width: 768px) {
             .order-layout { flex-direction: column; }
             .order-menu { order: 2; }
@@ -411,6 +430,7 @@
         <button class="desktop-icon" id="aboutBtn" type="button">About</button>
         <button class="desktop-icon" id="menuBtn" type="button">Menu</button>
         <button class="desktop-icon" id="orderBtn" type="button">Order</button>
+        <button class="desktop-icon" id="applyBtn" type="button">Apply</button>
     </div>
 
     <div class="menu-nav" id="menuNav">
@@ -720,6 +740,134 @@
             </div>
         </div>
 
+        <div class="content-pane apply-pane" id="applyPane">
+            <div class="apply-hero">
+                <h4 class="about-title">Employment Application</h4>
+                <p class="about-subtitle">Join the Jeb's team!</p>
+            </div>
+            <div class="apply-options">
+                <div class="apply-option">
+                    <h5>Download PDF</h5>
+                    <p>Print and fill out our employment application, or bring it in when you apply in person.</p>
+                    <a href="assets/employment-application.pdf" download class="apply-btn">Download Application (PDF)</a>
+                </div>
+                <div class="apply-option">
+                    <h5>Apply Online</h5>
+                    <p>Fill out the form below and submit. We'll receive your application right away.</p>
+                    <div class="apply-form-wrapper">
+                        <form id="applyForm" class="apply-form">
+                            <fieldset>
+                                <legend>Personal Information</legend>
+                                <label><input type="checkbox" name="over18"> I am 18 or over</label>
+                                <div class="form-row">
+                                    <label>Last Name <input type="text" name="lastName" required></label>
+                                    <label>First Name <input type="text" name="firstName" required></label>
+                                </div>
+                                <label>Present Address <input type="text" name="presentAddress"></label>
+                                <div class="form-row">
+                                    <label>City <input type="text" name="presentCity"></label>
+                                    <label>State <input type="text" name="presentState" maxlength="2"></label>
+                                    <label>Zip <input type="text" name="presentZip"></label>
+                                </div>
+                                <label>Permanent Address (if different) <input type="text" name="permanentAddress"></label>
+                                <div class="form-row">
+                                    <label>City <input type="text" name="permanentCity"></label>
+                                    <label>State <input type="text" name="permanentState" maxlength="2"></label>
+                                    <label>Zip <input type="text" name="permanentZip"></label>
+                                </div>
+                                <div class="form-row">
+                                    <label>Phone <input type="tel" name="phone"></label>
+                                    <label>Cell <input type="tel" name="cell"></label>
+                                    <label>Email <input type="email" name="email" required></label>
+                                </div>
+                                <label>Referred by <input type="text" name="referredBy"></label>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Employment Desired</legend>
+                                <div class="form-row">
+                                    <label>Position <input type="text" name="position"></label>
+                                    <label>Salary desired $ <input type="text" name="salaryDesired"></label>
+                                </div>
+                                <div class="form-row">
+                                    <label>Date available to start <input type="text" name="dateAvailable"></label>
+                                    <label>Hrs/Days Available <input type="text" name="hrsDaysAvailable"></label>
+                                </div>
+                                <div class="form-row">
+                                    <label>Currently employed? <select name="currentlyEmployed"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+                                    <label>May we contact present employer? <select name="contactEmployer"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+                                </div>
+                                <label>If yes, phone and supervisor name <input type="text" name="employerContact"></label>
+                                <div class="form-row">
+                                    <label>Ever fired or quit in lieu of being fired? <select name="firedOrQuit"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+                                </div>
+                                <label>If yes, explain <textarea name="firedExplain" rows="2"></textarea></label>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Education</legend>
+                                <div class="edu-row">
+                                    <label>Elementary: School <input type="text" name="elemSchool"> Yrs <input type="text" name="elemYrs" size="3"> Graduated? <select name="elemGrad"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select> Subjects <input type="text" name="elemSubjects"></label>
+                                </div>
+                                <div class="edu-row">
+                                    <label>High School: School <input type="text" name="hsSchool"> Yrs <input type="text" name="hsYrs" size="3"> Graduated? <select name="hsGrad"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select> Subjects <input type="text" name="hsSubjects"></label>
+                                </div>
+                                <div class="edu-row">
+                                    <label>College: School <input type="text" name="collegeSchool"> Yrs <input type="text" name="collegeYrs" size="3"> Graduated? <select name="collegeGrad"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select> Subjects <input type="text" name="collegeSubjects"></label>
+                                </div>
+                                <div class="edu-row">
+                                    <label>Trade/Business/GED: <input type="text" name="tradeSchool"> Yrs <input type="text" name="tradeYrs" size="3"> Graduated? <select name="tradeGrad"><option value="">—</option><option value="yes">Yes</option><option value="no">No</option></select> Subjects <input type="text" name="tradeSubjects"></label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Former / Current Employers (up to 3)</legend>
+                                <div class="employer-block">
+                                    <label>Employer <input type="text" name="emp1Name"> Phone <input type="tel" name="emp1Phone"></label>
+                                    <label>Address <input type="text" name="emp1Address"></label>
+                                    <label>Position <input type="text" name="emp1Position"> Salary $ <input type="text" name="emp1Salary"> From <input type="text" name="emp1From" placeholder="MM/YY"> To <input type="text" name="emp1To" placeholder="MM/YY"></label>
+                                    <label>Reason for leaving <input type="text" name="emp1Reason"></label>
+                                </div>
+                                <div class="employer-block">
+                                    <label>Employer <input type="text" name="emp2Name"> Phone <input type="tel" name="emp2Phone"></label>
+                                    <label>Address <input type="text" name="emp2Address"></label>
+                                    <label>Position <input type="text" name="emp2Position"> Salary $ <input type="text" name="emp2Salary"> From <input type="text" name="emp2From" placeholder="MM/YY"> To <input type="text" name="emp2To" placeholder="MM/YY"></label>
+                                    <label>Reason for leaving <input type="text" name="emp2Reason"></label>
+                                </div>
+                                <div class="employer-block">
+                                    <label>Employer <input type="text" name="emp3Name"> Phone <input type="tel" name="emp3Phone"></label>
+                                    <label>Address <input type="text" name="emp3Address"></label>
+                                    <label>Position <input type="text" name="emp3Position"> Salary $ <input type="text" name="emp3Salary"> From <input type="text" name="emp3From" placeholder="MM/YY"> To <input type="text" name="emp3To" placeholder="MM/YY"></label>
+                                    <label>Reason for leaving <input type="text" name="emp3Reason"></label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>References (3 required, not related)</legend>
+                                <div class="ref-block">
+                                    <label>Name <input type="text" name="ref1Name"> Phone <input type="tel" name="ref1Phone"></label>
+                                    <label>Address <input type="text" name="ref1Address"> Relationship <input type="text" name="ref1Rel"> Yrs known <input type="text" name="ref1Yrs" size="3"></label>
+                                </div>
+                                <div class="ref-block">
+                                    <label>Name <input type="text" name="ref2Name"> Phone <input type="tel" name="ref2Phone"></label>
+                                    <label>Address <input type="text" name="ref2Address"> Relationship <input type="text" name="ref2Rel"> Yrs known <input type="text" name="ref2Yrs" size="3"></label>
+                                </div>
+                                <div class="ref-block">
+                                    <label>Name <input type="text" name="ref3Name"> Phone <input type="tel" name="ref3Phone"></label>
+                                    <label>Address <input type="text" name="ref3Address"> Relationship <input type="text" name="ref3Rel"> Yrs known <input type="text" name="ref3Yrs" size="3"></label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Certification</legend>
+                                <p class="cert-text">I certify that the facts contained in this application are true and complete to the best of my knowledge and understand that, if employed, falsified statements shall be grounds for dismissal. I authorize investigation of all statements and release the company from liability for damages resulting from utilization of such information.</p>
+                                <div class="form-row">
+                                    <label>Signature <input type="text" name="signature" required placeholder="Type your full name"></label>
+                                    <label>Date <input type="date" name="signatureDate" required></label>
+                                </div>
+                            </fieldset>
+                            <button type="submit" class="apply-submit-btn">Submit Application</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="content-pane order-pane" id="orderPane">
             <div class="order-layout">
                 <div class="order-menu" id="orderMenu"></div>
@@ -754,20 +902,21 @@
     const aboutBtn = document.getElementById('aboutBtn');
     const menuBtn = document.getElementById('menuBtn');
     const orderBtn = document.getElementById('orderBtn');
-
+    const applyBtn = document.getElementById('applyBtn');
 
     const aboutPane = document.getElementById('aboutPane');
     const menuPane = document.getElementById('menuPane');
     const orderPane = document.getElementById('orderPane');
+    const applyPane = document.getElementById('applyPane');
     const mainContent = document.getElementById('mainContent');
-    const allPanes = [aboutPane, menuPane, orderPane];
+    const allPanes = [aboutPane, menuPane, orderPane, applyPane];
 
     const DEFAULT_PANE = 'about';
     const DEFAULT_MENU_CAT = 'starters';
     const MENU_CATS = ['starters','specialties','soups-salads','burgers','wraps','sandwiches','pastas','seafood','chicken','beef','breakfast','beverages'];
-    const hashFor = { about: 'about', menu: 'menu', order: 'order' };
-    const paneForHash = { about: aboutPane, menu: menuPane, order: orderPane };
-    const btnForHash = { about: aboutBtn, menu: menuBtn, order: orderBtn };
+    const hashFor = { about: 'about', menu: 'menu', order: 'order', apply: 'apply' };
+    const paneForHash = { about: aboutPane, menu: menuPane, order: orderPane, apply: applyPane };
+    const btnForHash = { about: aboutBtn, menu: menuBtn, order: orderBtn, apply: applyBtn };
 
     function updateLayout() {
         const brickBand = document.getElementById('brickBand');
@@ -799,7 +948,7 @@
     }
 
     function setActiveButton(key) {
-        [aboutBtn, menuBtn, orderBtn].forEach(function(btn) { btn.classList.remove('active'); });
+        [aboutBtn, menuBtn, orderBtn, applyBtn].forEach(function(btn) { btn.classList.remove('active'); });
         if (key && btnForHash[key]) btnForHash[key].classList.add('active');
     }
 
@@ -843,6 +992,7 @@
     aboutBtn.addEventListener('click', function() { showPane('about', true); });
     menuBtn.addEventListener('click', function() { showPane('menu-starters', true); });
     orderBtn.addEventListener('click', function() { showPane('order', true); });
+    applyBtn.addEventListener('click', function() { showPane('apply', true); });
 
     (function orderModule() {
         var cart = [];
@@ -1007,6 +1157,45 @@
         });
 
         window.orderRenderCart = renderCart;
+    })();
+
+    (function applyModule() {
+        var form = document.getElementById('applyForm');
+        if (!form) return;
+        var API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:8787'
+            : 'https://jebs-api.jm-306.workers.dev';
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var fd = new FormData(form);
+            var data = {};
+            fd.forEach(function(v, k) { data[k] = v; });
+            form.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                if (!cb.checked) data[cb.name] = false;
+            });
+            var btn = form.querySelector('.apply-submit-btn');
+            if (btn) btn.disabled = true;
+            fetch(API_BASE + '/api/submit-application', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(function(r) {
+                if (!r.ok) throw new Error('Submission failed');
+                return r.json();
+            }).then(function() {
+                var msg = document.createElement('p');
+                msg.style.cssText = 'background:#9e4538;color:#fff;padding:12px;border-radius:8px;margin-bottom:16px;';
+                msg.textContent = 'Thank you! Your application has been submitted. We will be in touch.';
+                msg.className = 'apply-success-msg';
+                form.parentNode.insertBefore(msg, form);
+                form.reset();
+            }).catch(function(err) {
+                console.error(err);
+                alert('Submission failed. Please download the PDF and bring it in, or call 315-376-6029.');
+            }).finally(function() {
+                if (btn) btn.disabled = false;
+            });
+        });
     })();
 
     document.querySelectorAll('.menu-nav-btn').forEach(function(btn) {

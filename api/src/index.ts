@@ -2,6 +2,8 @@ import Stripe from 'stripe';
 
 export interface Env {
   STRIPE_SECRET_KEY: string;
+  RESEND_API_KEY?: string;
+  JEB_APPLICATION_EMAIL?: string;
   CORS_ORIGIN?: string;
 }
 
@@ -16,6 +18,10 @@ interface CreateCheckoutBody {
   lineItems: LineItemInput[];
   successUrl: string;
   cancelUrl: string;
+}
+
+interface EmploymentApplication {
+  [key: string]: string | boolean | undefined;
 }
 
 function corsHeaders(env: Env): HeadersInit {
@@ -92,8 +98,49 @@ export default {
       }
     }
 
+    if (method === 'POST' && path === '/api/submit-application') {
+      try {
+        const body = (await request.json()) as EmploymentApplication;
+        const toEmail = env.JEB_APPLICATION_EMAIL || 'jebs@marziale.tech';
+        const apiKey = env.RESEND_API_KEY;
+
+        const bodyText = Object.entries(body)
+          .filter(([, v]) => v != null && v !== '')
+          .map(([k, v]) => `${k}: ${v}`)
+          .join('\n');
+
+        if (apiKey) {
+          const res = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              from: 'Jeb\'s Website <noreply@resend.dev>',
+              to: [toEmail],
+              subject: 'Employment Application - ' + (body.firstName || '') + ' ' + (body.lastName || ''),
+              text: 'New employment application submitted:\n\n' + bodyText,
+            }),
+          });
+          if (!res.ok) {
+            const err = await res.text();
+            throw new Error(err || 'Email send failed');
+          }
+        } else {
+          console.log('Application received (no RESEND_API_KEY):', bodyText);
+        }
+
+        return jsonResponse({ success: true }, env);
+      } catch (err) {
+        console.error('Application submit error:', err);
+        const msg = err instanceof Error ? err.message : 'Submission failed';
+        return errorResponse(msg, env, 500);
+      }
+    }
+
     if (method === 'GET' && (path === '/api/health' || path === '/')) {
-      return jsonResponse({ status: 'ok', service: 'nypizza-api' }, env);
+      return jsonResponse({ status: 'ok', service: 'jebs-api' }, env);
     }
 
     return errorResponse('Not found', env, 404);

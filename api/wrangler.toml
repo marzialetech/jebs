@@ -8,3 +8,7 @@ CORS_ORIGIN = "*"
 
 # Stripe secret key - set via: wrangler secret put STRIPE_SECRET_KEY
 # Use sk_test_... for test mode, sk_live_... for production
+
+# Employment applications - set via wrangler secret put:
+# RESEND_API_KEY - from resend.com for sending application emails
+# JEB_APPLICATION_EMAIL - email address to receive applications (e.g. jebs@jebsrestaurant.com)
