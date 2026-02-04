@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeb's Restaurant Website — Product Overview</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 1in; }
+            .page-break { page-break-before: always; }
+            img { max-width: 100%; height: auto; }
+        }
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 1.75rem;
+            color: #2c1810;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .intro {
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        .section h2 {
+            font-size: 1.25rem;
+            color: #5c3d2e;
+            margin-bottom: 0.5rem;
+        }
+        .section p {
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
+        }
+        .section img {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .caption {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jeb's Restaurant Website</h1>
+    <p class="subtitle">Product Overview — jebs.marziale.tech</p>
+
+    <div class="intro">
+        <p>This document provides an overview of the website built for Jeb's Restaurant of Lowville, NY. The site offers a complete online presence for the restaurant, including information about the business, a full menu, online ordering with Stripe checkout, and an employment application system.</p>
+    </div>
+
+    <div class="section">
+        <h2>1. About Page</h2>
+        <p>The About section introduces Jeb's Restaurant with the tagline "Great Food, Great Times, Great Service - All the Time!" It features information about the family ownership (Emerson and Jennifer Metzler since 2002), private event offerings, operating hours, and a description of the restaurant's historic space—including original tin ceilings, Tiffany-style chandeliers, and bar amenities. Contact details, Facebook, and TripAdvisor links are included in the footer.</p>
+        <img src="assets/jebs-about.png" alt="Jeb's Restaurant About page">
+        <p class="caption">About page showing restaurant info, hours, and Our Space description</p>
+    </div>
+
+    <div class="section page-break">
+        <h2>2. Menu</h2>
+        <p>The Menu section organizes offerings into categories: Starters, Specialties, Soups & Salads, Burgers, Wraps, Sandwiches, Pastas, Seafood, Chicken, Beef, Breakfast, and Beverages. Each category displays items with descriptions and prices in a clean, readable layout. Sub-navigation allows quick jumping between sections.</p>
+        <img src="assets/jebs-menu.png" alt="Jeb's Restaurant Menu — Starters">
+        <p class="caption">Menu Starters section with wing sauces and appetizer listings</p>
+    </div>
+
+    <div class="section page-break">
+        <h2>3. Online Ordering</h2>
+        <p>The Order page enables customers to browse the full menu, add items to a cart, and checkout via Stripe. A persistent order summary sidebar shows selected items and total. Users can also call 315-376-6029 to place orders by phone. The interface mirrors the menu structure for consistency.</p>
+        <img src="assets/jebs-order.png" alt="Jeb's Restaurant Order page">
+        <p class="caption">Order page with menu items, cart, and Stripe checkout</p>
+    </div>
+
+    <div class="section page-break">
+        <h2>4. Employment Application</h2>
+        <p>The Apply section supports two application methods: a downloadable PDF for print or in-person submission, and an online form that submits directly to the restaurant. The form includes personal information, employment desired, availability, and referral fields—matching the PDF application for consistency.</p>
+        <img src="assets/jebs-apply.png" alt="Jeb's Restaurant Employment Application">
+        <p class="caption">Employment Application with PDF download and online form options</p>
+    </div>
+</body>
+</html>
