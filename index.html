@@ -323,9 +323,6 @@
         .order-cart { flex: 0 0 320px; min-width: 0; display: flex; flex-direction: column; }
         .order-cart-inner { background: #e8e0d5; border: 1px solid #b87a65; border-radius: 8px; padding: 16px; flex: 1; min-height: 0; overflow: auto; }
         .order-cart h4 { margin: 0 0 12px 0; color: #9e4538; font-size: 1.3em; font-style: italic; }
-        .order-type { margin-bottom: 16px; }
-        .order-type label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; margin-right: 16px; }
-        .order-type input { accent-color: #9e4538; }
         .order-cat { margin-bottom: 20px; }
         .order-cat h5 { margin: 0 0 8px 0; color: #9e4538; font-size: 1.1em; font-style: italic; }
         .order-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #d8c8b8; }
@@ -708,10 +705,6 @@
         </div>
 
         <div class="content-pane order-pane" id="orderPane">
-            <div class="order-type">
-                <label><input type="radio" name="orderType" value="pickup" checked> Pickup</label>
-                <label><input type="radio" name="orderType" value="delivery"> Delivery (+$5, $25 min)</label>
-            </div>
             <div class="order-layout">
                 <div class="order-menu" id="orderMenu"></div>
                 <div class="order-cart">
@@ -838,15 +831,9 @@
     (function orderModule() {
         var cart = [];
         var menuData = null;
-        var DELIVERY_FEE = 5;
-        var DELIVERY_MIN = 25;
         var API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
             ? 'http://localhost:8787'
             : 'https://jebs-api.jm-306.workers.dev';
-
-        function getOrderType() {
-            return document.querySelector('input[name="orderType"]:checked')?.value || 'pickup';
-        }
 
         function addToCart(item, qty) {
             qty = qty || 1;
@@ -866,12 +853,7 @@
         }
 
         function getTotal() {
-            var sub = getSubtotal();
-            if (getOrderType() === 'delivery') {
-                if (sub < DELIVERY_MIN) return sub;
-                return sub + DELIVERY_FEE;
-            }
-            return sub;
+            return getSubtotal();
         }
 
         function renderCart() {
@@ -879,35 +861,26 @@
             var totalEls = document.querySelectorAll('.order-cart-total');
             var btns = document.querySelectorAll('.order-checkout-btn');
             if (!itemsEls.length || !totalEls.length) return;
-            var sub = getSubtotal();
-            var isDelivery = getOrderType() === 'delivery';
             var cartHtml, totalHtml;
             if (cart.length === 0) {
                 cartHtml = '<p style="color:#666;margin:0;">Cart is empty. Add items from the menu.</p>';
                 totalHtml = '$0.00';
             } else {
-                var minOk = !isDelivery || sub >= DELIVERY_MIN;
                 cartHtml = cart.map(function(c) {
                     return '<div class="cart-item" data-id="' + c.id + '">' +
                         '<span><span class="cart-item-qty">' + c.qty + '</span> × ' + escapeHtml(c.name) + '</span>' +
                         '<span>$' + (c.price * c.qty).toFixed(2) + ' <button type="button" class="cart-item-rm" aria-label="Remove">×</button></span>' +
                         '</div>';
                 }).join('');
-                if (isDelivery && minOk) {
-                    cartHtml += '<div class="cart-item cart-item-delivery"><span>Delivery fee</span><span>$' + DELIVERY_FEE.toFixed(2) + '</span></div>';
-                }
-                var total = getTotal();
-                totalHtml = (isDelivery && sub < DELIVERY_MIN)
-                    ? '<span style="color:#9e4538;">$25 minimum for delivery. Current: $' + sub.toFixed(2) + '</span>'
-                    : (isDelivery ? 'Subtotal: $' + sub.toFixed(2) + '<br>Delivery: $' + DELIVERY_FEE.toFixed(2) + '<br>Total: $' + total.toFixed(2) : 'Total: $' + total.toFixed(2));
+                totalHtml = 'Total: $' + getTotal().toFixed(2);
             }
             itemsEls.forEach(function(el) { el.innerHTML = cartHtml; });
             totalEls.forEach(function(el) { el.innerHTML = totalHtml; });
-            btns.forEach(function(btn) { btn.disabled = cart.length === 0 || (isDelivery && sub < DELIVERY_MIN); });
+            btns.forEach(function(btn) { btn.disabled = cart.length === 0; });
             document.querySelectorAll('.order-cart-items .cart-item-rm').forEach(function(b) {
                 b.addEventListener('click', function() {
                     var row = b.closest('.cart-item');
-                    if (row && !row.classList.contains('cart-item-delivery')) removeFromCart(row.getAttribute('data-id'));
+                    if (row) removeFromCart(row.getAttribute('data-id'));
                 });
             });
         }
@@ -946,15 +919,9 @@
 
         function doCheckout() {
             if (cart.length === 0) return;
-            var isDelivery = getOrderType() === 'delivery';
-            var sub = getSubtotal();
-            if (isDelivery && sub < DELIVERY_MIN) return;
             var lineItems = cart.map(function(c) {
                 return { id: c.id, name: c.name, priceCents: Math.round(c.price * 100), quantity: c.qty };
             });
-            if (isDelivery) {
-                lineItems.push({ id: 'delivery', name: 'Delivery fee', priceCents: DELIVERY_FEE * 100, quantity: 1 });
-            }
             document.querySelectorAll('.order-checkout-btn').forEach(function(btn) { btn.disabled = true; });
             var origin = window.location.origin || (window.location.protocol + '//' + window.location.host);
             fetch(API_BASE + '/api/create-checkout-session', {
@@ -978,9 +945,6 @@
             });
         }
 
-        document.querySelectorAll('input[name="orderType"]').forEach(function(r) {
-            r.addEventListener('change', renderCart);
-        });
         document.querySelectorAll('.order-checkout-btn').forEach(function(btn) {
             btn.addEventListener('click', doCheckout);
         });
@@ -993,7 +957,7 @@
                 history.replaceState(null, '', window.location.pathname + window.location.hash);
                 var msg = document.createElement('p');
                 msg.style.cssText = 'background:#9e4538;color:#fff;padding:12px;border-radius:8px;margin-bottom:16px;';
-                msg.textContent = 'Thank you! Your order has been received. We will prepare it for pickup/delivery.';
+                msg.textContent = 'Thank you! Your order has been received. We will prepare it for pickup.';
                 var orderPane = document.getElementById('orderPane');
                 if (orderPane && !orderPane.querySelector('.order-success-msg')) {
                     msg.className = 'order-success-msg';
