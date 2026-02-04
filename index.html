@@ -198,20 +198,22 @@
             line-height: 1.4;
         }
         .menu-pane { padding-top: 0; }
-        .menu-scroll-wrapper {
-            flex: 1;
-            min-height: 0;
-            overflow: auto;
-        }
-        /* Menu subpage bar - scrolls with content */
+        /* Menu subpage bar - same fixed environment as main icon-bar */
         .menu-nav {
-            flex-shrink: 0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            display: none;
             flex-wrap: nowrap;
+            flex-shrink: 0;
+        }
+        .menu-nav.visible {
             display: flex;
         }
         @media (max-width: 900px) {
             /* 4 rows of 3 for 12 categories */
-            .menu-nav {
+            .menu-nav.visible {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr);
                 grid-template-rows: repeat(4, auto);
@@ -274,7 +276,7 @@
             overflow: hidden;
         }
         .menu-sub.active { display: block; }
-        .menu-sub-content { overflow: visible; min-height: 0; }
+        .menu-sub-content { overflow: auto; min-height: 0; flex: 1; }
         .menu-split { display: flex; gap: 32px; flex: 1; min-height: 0; min-width: 0; }
         .menu-left { flex: 1; min-width: 0; }
         .menu-right { flex: 2; min-width: 0; }
@@ -431,6 +433,21 @@
         <button class="desktop-icon" id="applyBtn" type="button">Apply</button>
     </div>
 
+    <div class="menu-nav" id="menuNav">
+        <button class="menu-nav-btn" data-cat="starters">Starters</button>
+        <button class="menu-nav-btn" data-cat="specialties">Specialties</button>
+        <button class="menu-nav-btn" data-cat="soups-salads">Soups & Salads</button>
+        <button class="menu-nav-btn" data-cat="burgers">Burgers</button>
+        <button class="menu-nav-btn" data-cat="wraps">Wraps</button>
+        <button class="menu-nav-btn" data-cat="sandwiches">Sandwiches</button>
+        <button class="menu-nav-btn" data-cat="pastas">Pastas</button>
+        <button class="menu-nav-btn" data-cat="seafood">Seafood</button>
+        <button class="menu-nav-btn" data-cat="chicken">Chicken</button>
+        <button class="menu-nav-btn" data-cat="beef">Beef</button>
+        <button class="menu-nav-btn" data-cat="breakfast">Breakfast</button>
+        <button class="menu-nav-btn" data-cat="beverages">Beverages</button>
+    </div>
+
     <main class="main-content" id="mainContent">
         <div class="content-pane about-pane" id="aboutPane">
             <div class="about-block wide about-hero">
@@ -477,22 +494,7 @@
         </div>
 
         <div class="content-pane menu-pane" id="menuPane">
-            <div class="menu-scroll-wrapper">
-                <div class="menu-nav visible" id="menuNav">
-                    <button class="menu-nav-btn" data-cat="starters">Starters</button>
-                    <button class="menu-nav-btn" data-cat="specialties">Specialties</button>
-                    <button class="menu-nav-btn" data-cat="soups-salads">Soups & Salads</button>
-                    <button class="menu-nav-btn" data-cat="burgers">Burgers</button>
-                    <button class="menu-nav-btn" data-cat="wraps">Wraps</button>
-                    <button class="menu-nav-btn" data-cat="sandwiches">Sandwiches</button>
-                    <button class="menu-nav-btn" data-cat="pastas">Pastas</button>
-                    <button class="menu-nav-btn" data-cat="seafood">Seafood</button>
-                    <button class="menu-nav-btn" data-cat="chicken">Chicken</button>
-                    <button class="menu-nav-btn" data-cat="beef">Beef</button>
-                    <button class="menu-nav-btn" data-cat="breakfast">Breakfast</button>
-                    <button class="menu-nav-btn" data-cat="beverages">Beverages</button>
-                </div>
-                <div class="menu-sub active" id="menu-sub-starters">
+            <div class="menu-sub active" id="menu-sub-starters">
                 <div class="menu-sub-content">
                     <div class="menu-section">
                         <h4>Super Starters</h4>
@@ -733,7 +735,6 @@
                     </div>
                 </div>
             </div>
-            </div>
             <div class="menu-footer">
                 <p><em>If you have a food allergy, please notify us. Menu prices and items subject to change without notice.</em></p>
             </div>
@@ -921,6 +922,7 @@
         const brickBand = document.getElementById('brickBand');
         const logoFrame = document.querySelector('.header .logo-frame');
         const iconBar = document.querySelector('.icon-bar');
+        const menuNav = document.getElementById('menuNav');
         if (!brickBand || !logoFrame || !mainContent) return;
         const rect = logoFrame.getBoundingClientRect();
         const logoBottom = rect.bottom;
@@ -933,6 +935,13 @@
         if (iconBar) {
             iconBar.style.top = (bandTop + bandHeight) + 'px';
             var topAnchor = iconBar.getBoundingClientRect().bottom;
+            if (menuNav && menuPane.classList.contains('active')) {
+                menuNav.classList.add('visible');
+                menuNav.style.top = topAnchor + 'px';
+                topAnchor = menuNav.getBoundingClientRect().bottom;
+            } else if (menuNav) {
+                menuNav.classList.remove('visible');
+            }
             mainContent.style.top = topAnchor + 'px';
             mainContent.style.height = (window.innerHeight - topAnchor) + 'px';
         }
