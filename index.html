@@ -205,16 +205,22 @@
             line-height: 1.4;
         }
         .menu-pane { padding-top: 0; }
-        /* Desktop: single row spanning full width */
+        /* Menu subpage bar - same fixed environment as main icon-bar */
         .menu-nav {
-            display: flex;
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            display: none;
             flex-wrap: nowrap;
             flex-shrink: 0;
-            margin: 0 -32px 0 -32px;
+        }
+        .menu-nav.visible {
+            display: flex;
         }
         @media (max-width: 900px) {
             /* 3 rows of 3 - no intermediate state where buttons hide */
-            .menu-nav {
+            .menu-nav.visible {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr);
                 grid-template-rows: repeat(3, auto);
@@ -356,7 +362,6 @@
             .menu-table td:last-child { white-space: normal; }
             .menu-section h4 { font-size: 1.5em; }
             .menu-footer, .menu-note { font-size: 13px; }
-            .menu-nav { margin: 0 -16px; }
             .icon-bar .desktop-icon { font-size: 18px; padding: 0.4rem 0.5rem; }
             .header .logo-frame img { width: 95vw; max-width: 95vw; }
             .hours-table { max-width: 100%; table-layout: fixed; }
@@ -376,6 +381,18 @@
         <button class="desktop-icon" id="aboutBtn" type="button">About</button>
         <button class="desktop-icon" id="menuBtn" type="button">Menu</button>
         <button class="desktop-icon" id="orderBtn" type="button">Order</button>
+    </div>
+
+    <div class="menu-nav" id="menuNav">
+        <button class="menu-nav-btn" data-cat="pizza">Pizza</button>
+        <button class="menu-nav-btn" data-cat="appetizers">Appetizers</button>
+        <button class="menu-nav-btn" data-cat="salads">Salads</button>
+        <button class="menu-nav-btn" data-cat="wings">Wings</button>
+        <button class="menu-nav-btn" data-cat="subs">Subs</button>
+        <button class="menu-nav-btn" data-cat="tunnels">Tunnels</button>
+        <button class="menu-nav-btn" data-cat="pockets">Pockets & Rolls</button>
+        <button class="menu-nav-btn" data-cat="dinners">Dinners</button>
+        <button class="menu-nav-btn" data-cat="desserts">Desserts</button>
     </div>
 
     <main class="main-content" id="mainContent">
@@ -423,17 +440,6 @@
         </div>
 
         <div class="content-pane menu-pane" id="menuPane">
-            <div class="menu-nav">
-                <button class="menu-nav-btn" data-cat="pizza">Pizza</button>
-                <button class="menu-nav-btn" data-cat="appetizers">Appetizers</button>
-                <button class="menu-nav-btn" data-cat="salads">Salads</button>
-                <button class="menu-nav-btn" data-cat="wings">Wings</button>
-                <button class="menu-nav-btn" data-cat="subs">Subs</button>
-                <button class="menu-nav-btn" data-cat="tunnels">Tunnels</button>
-                <button class="menu-nav-btn" data-cat="pockets">Pockets & Rolls</button>
-                <button class="menu-nav-btn" data-cat="dinners">Dinners</button>
-                <button class="menu-nav-btn" data-cat="desserts">Desserts</button>
-            </div>
             <div class="menu-sub" id="menu-sub-appetizers">
                 <div class="menu-sub-content">
                     <div class="menu-section">
@@ -681,6 +687,7 @@
         const stripeBand = document.getElementById('stripeBand');
         const logoFrame = document.querySelector('.header .logo-frame');
         const iconBar = document.querySelector('.icon-bar');
+        const menuNav = document.getElementById('menuNav');
         if (!stripeBand || !logoFrame || !mainContent) return;
         const rect = logoFrame.getBoundingClientRect();
         const logoBottom = rect.bottom;
@@ -692,9 +699,16 @@
         stripeBand.style.height = stripeHeight + 'px';
         if (iconBar) {
             iconBar.style.top = (stripeTop + stripeHeight) + 'px';
-            const barRect = iconBar.getBoundingClientRect();
-            mainContent.style.top = barRect.bottom + 'px';
-            mainContent.style.height = (window.innerHeight - barRect.bottom) + 'px';
+            var topAnchor = iconBar.getBoundingClientRect().bottom;
+            if (menuNav && menuPane.classList.contains('active')) {
+                menuNav.classList.add('visible');
+                menuNav.style.top = topAnchor + 'px';
+                topAnchor = menuNav.getBoundingClientRect().bottom;
+            } else if (menuNav) {
+                menuNav.classList.remove('visible');
+            }
+            mainContent.style.top = topAnchor + 'px';
+            mainContent.style.height = (window.innerHeight - topAnchor) + 'px';
         }
     }
 
@@ -727,6 +741,7 @@
         setActiveButton(mainKey);
         if (mainKey === 'menu') showMenuSub(menuCat || DEFAULT_MENU_CAT, false);
         if (updateHash) window.location.hash = (mainKey === 'menu' && menuCat) ? 'menu-' + menuCat : mainKey;
+        updateLayout();
     }
 
     function syncFromHash() {
